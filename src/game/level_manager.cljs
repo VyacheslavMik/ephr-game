@@ -11,7 +11,8 @@
             [game.nurse :as nurse]
             [game.world :as world]
             [game.animation-strip :as anim]
-            [game.tile-map :as tile-map]))
+            [game.tile-map :as tile-map]
+            [clojure.string :as str]))
 
 (def context (atom {}))
 
@@ -33,6 +34,7 @@
                (swap! context assoc :beldams [])
                (swap! context assoc :spikes [])
                (swap! context assoc :nurses [])
+               (swap! context assoc :telepors {})
                (dotimes [x tile-map/map-width]
                  (dotimes [y tile-map/map-height]
                    (let [code (tile-map/cell-code-value x y)]
@@ -44,6 +46,8 @@
                                                             :y (- (* (inc y) tile-map/tile-height)
                                                                   (:frame-height patient))})
                                     (patient/play-animation "idle")))))
+                     (when (and code (str/starts-with? code "P"))
+                       (swap! context update-in [:teleports code] conj {:x x :y y}))
                      (when (= code "BELDAM")
                        (swap! context update :beldams conj (beldam/new-beldam x y)))
                      (when (= code "NURSE")
