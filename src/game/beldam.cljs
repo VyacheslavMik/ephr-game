@@ -22,14 +22,16 @@
                               (anim/update-animation-strip))}]
     (-> ob
         (assoc :animations animations
-               :world-location {:x (* cell-x tile-map/tile-width) :y (* cell-y tile-map/tile-height)}
+               :world-location {:x (* cell-x tile-map/tile-width)
+                                :y (- (* (inc cell-y) tile-map/tile-height) 120)}
                :fall-speed {:x 0 :y 20}
+               :last-throw-time 0
                :facing-left true
                :dead? false
                :walk-speed 60
                :frame-width 48
                :frame-height 120
-               :collision-rectangle {:x 0 :y 0 :width 48 :height 119}
+               :collision-rectangle {:x 1 :y 1 :width 48 :height 119}
                :enabled? true
                :code-based-blocks? true)
         (game-object/play-animation "run"))))

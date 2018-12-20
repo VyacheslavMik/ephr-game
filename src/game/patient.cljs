@@ -40,7 +40,7 @@
                :lives-remaining 3
                :frame-width 48
                :frame-height 120
-               :collision-rectangle {:x 0 :y 0 :width 48 :height 119}
+               :collision-rectangle {:x 1 :y 1 :width 48 :height 119}
                :enabled? true
                :load-level load-level
                :context context

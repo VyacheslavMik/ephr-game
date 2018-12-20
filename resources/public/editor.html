@@ -181,6 +181,10 @@
 	<div class="dropbtn">Tools</div>
 	<div class="dropdown-content">
 	  <a onclick="game.editor.clear_map()">Clear map</a>
+	  <div class="menu-entry">
+	    <input type="file" onchange="game.editor.load_tiles(event)">
+	    <span>Load tiles</span>
+	  </div>
 	</div>
       </div>
       <div class="dropdown">
