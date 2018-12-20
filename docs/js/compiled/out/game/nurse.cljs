@@ -17,7 +17,8 @@
                               (anim/update-animation-strip))}]
     (-> ob
         (assoc :animations animations
-               :world-location {:x (* cell-x tile-map/tile-width) :y (* cell-y tile-map/tile-height)}
+               :world-location {:x (* cell-x tile-map/tile-width)
+                                :y (- (* (inc cell-y) tile-map/tile-height) 120)}
                :facing-left true
                :dead? false
                :walk-speed 60

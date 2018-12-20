@@ -5,7 +5,8 @@
             [goog.string.format]
             [game.camera :as camera]
             [game.utils :as u]
-            [game.tile-map :as tile-map]))
+            [game.tile-map :as tile-map]
+            [clojure.string :as str]))
 
 (defonce context (atom {:layer :background
                         :mode :toggle-passable
@@ -81,15 +82,19 @@
 (defn ^:export clear-map []
   (tile-map/clear-map))
 
-(defn fill-tiles []
+(defn tile-url [path]
+  (str "url(" path ")"))
+
+(defn fill-tiles [path]
   (let [tiles (.querySelector js/document "#tiles")]
+    (set! (.. tiles -innerHTML) "")
     (loop [y 0]
-      (when (< y tile-map/tile-rows)
+      (when (< y @tile-map/tile-rows)
         (loop [x 0]
-          (when (< x tile-map/tiles-per-row)
+          (when (< x @tile-map/tiles-per-row)
             (let [tile      (.createElement js/document "div")
                   tile-text (.createElement js/document "div")
-                  index     (+ (* y tile-map/tiles-per-row) x)]
+                  index     (+ (* y @tile-map/tiles-per-row) x)]
               (.. tile-text -classList (add "tile-text"))
               (set! (.-textContent tile-text) (cond
                                                 (and (= y 0) (= x 0)) "empty"
@@ -102,12 +107,25 @@
               (set! (.. tile -onclick) (fn [ev]
                                          (swap! context assoc :tile-index index)))
               (set! (.. tile -style -background)
-                    (str "url(textures/PlatformTiles.png)"
+                    (str (tile-url path)
                          " " (- (* x tile-map/tile-width)) "px"
                          " " (- (* y tile-map/tile-height)) "px"))
               (.appendChild tiles tile))
             (recur (inc x))))
         (recur (inc y))))))
+
+(defn ^:export load-tiles [ev]
+  (let [fr (js/FileReader.)
+        file (aget ev "target" "files" 0)]
+    (aset fr "onload" (fn [e]
+                        (let [img (js/Image.)]
+                          (set! (.. img -onload) (fn [_]
+                                                   (tile-map/load-tiles img)
+                                                   (tile-map/initialize true)
+                                                   (fill-tiles (.. e -target -result))))
+                          (set! (.. img -src) (.. e -target -result)))))
+    (.readAsDataURL fr file))
+  (set! (.. ev -target -value) ""))
 
 (defn fill-map-numbers []
   (let [map-numbers (.querySelector js/document "#map-numbers")]
@@ -149,6 +167,7 @@
     (set! (.-max right-range)   (- (:height (camera/world-rectangle)) (camera/view-port-height)))))
 
 (defn run [app update* root]
+  (swap! context assoc :app app)
   (.. app -stage (addChild root))
   (controls/register-events (.. app -view))
   (.. app -ticker (add (fn [_]
@@ -157,10 +176,8 @@
 (defn ^:export init []
   (when-not (:initialized? @context)
     (swap! context assoc :initialized? true)
-    (fill-tiles)
     (fill-map-numbers)
     (set-disable-code-inputs)
-    (tile-map/initialize true)
     (camera/initialize {:view-port-width 800
                         :view-port-height 600
                         :world-rectangle {:x 0 :y 0
@@ -168,4 +185,9 @@
                                           :height (* tile-map/tile-height tile-map/map-height)}})
     (swap! context assoc :position {:x 0 :y (- (:height (camera/world-rectangle)) (camera/view-port-height))})
     (setup-scroll-bar)
-    (run (pixi/init) update* camera/container)))
+    (run (pixi/init ["textures/PlatformTiles.png"]
+                    #(do
+                       (tile-map/load-tiles "textures/PlatformTiles.png")
+                       (fill-tiles "textures/PlatformTiles.png")
+                       (tile-map/initialize true)))
+      update* camera/container)))

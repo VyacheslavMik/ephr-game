@@ -10,19 +10,23 @@ game.tile_map.tile_width = (48);
 game.tile_map.tile_height = (48);
 game.tile_map.map_width = (80);
 game.tile_map.map_height = (80);
-game.tile_map.tiles_per_row = (5);
-game.tile_map.tile_rows = (5);
+game.tile_map.tiles_per_row = cljs.core.atom.call(null,(0));
+game.tile_map.tile_rows = cljs.core.atom.call(null,(0));
 game.tile_map.sky_tile = (2);
 game.tile_map.context = cljs.core.atom.call(null,new cljs.core.PersistentArrayMap(null, 2, [new cljs.core.Keyword(null,"editor-mode?","editor-mode?",-1857893371),false,new cljs.core.Keyword(null,"map-cells","map-cells",-432327458),[]], null));
-game.tile_map.load_tiles = (function game$tile_map$load_tiles(){
-var bt = PIXI.BaseTexture.fromImage("textures/PlatformTiles.png");
-return cljs.core.reduce.call(null,((function (bt){
+game.tile_map.tile_textures = cljs.core.atom.call(null,cljs.core.PersistentArrayMap.EMPTY);
+game.tile_map.load_tiles = (function game$tile_map$load_tiles(source){
+var bt = PIXI.BaseTexture.from(source);
+cljs.core.reset_BANG_.call(null,game.tile_map.tiles_per_row,Math.floor((bt.width / game.tile_map.tile_width)));
+
+cljs.core.reset_BANG_.call(null,game.tile_map.tile_rows,Math.floor((bt.height / game.tile_map.tile_height)));
+
+return cljs.core.reset_BANG_.call(null,game.tile_map.tile_textures,cljs.core.reduce.call(null,((function (bt){
 return (function (acc,i){
-return cljs.core.assoc.call(null,acc,i,(new PIXI.Texture(bt,(new PIXI.Rectangle((cljs.core.mod.call(null,i,game.tile_map.tiles_per_row) * game.tile_map.tile_width),(Math.floor((i / game.tile_map.tiles_per_row)) * game.tile_map.tile_height),game.tile_map.tile_width,game.tile_map.tile_height)),(new PIXI.Rectangle((cljs.core.mod.call(null,i,game.tile_map.tiles_per_row) * game.tile_map.tile_width),(Math.floor((i / game.tile_map.tiles_per_row)) * game.tile_map.tile_height),game.tile_map.tile_width,game.tile_map.tile_height)))));
+return cljs.core.assoc.call(null,acc,i,(new PIXI.Texture(bt,(new PIXI.Rectangle((cljs.core.mod.call(null,i,cljs.core.deref.call(null,game.tile_map.tiles_per_row)) * game.tile_map.tile_width),(Math.floor((i / cljs.core.deref.call(null,game.tile_map.tiles_per_row))) * game.tile_map.tile_height),game.tile_map.tile_width,game.tile_map.tile_height)),(new PIXI.Rectangle((cljs.core.mod.call(null,i,cljs.core.deref.call(null,game.tile_map.tiles_per_row)) * game.tile_map.tile_width),(Math.floor((i / cljs.core.deref.call(null,game.tile_map.tiles_per_row))) * game.tile_map.tile_height),game.tile_map.tile_width,game.tile_map.tile_height)))));
 });})(bt))
-,cljs.core.PersistentArrayMap.EMPTY,cljs.core.range.call(null,(game.tile_map.tiles_per_row * game.tile_map.tile_rows)));
+,cljs.core.PersistentArrayMap.EMPTY,cljs.core.range.call(null,(cljs.core.deref.call(null,game.tile_map.tiles_per_row) * cljs.core.deref.call(null,game.tile_map.tile_rows)))));
 });
-game.tile_map.tile_textures = game.tile_map.load_tiles.call(null);
 game.tile_map.tile_rect = (function game$tile_map$tile_rect(x,y){
 return new cljs.core.PersistentArrayMap(null, 4, [new cljs.core.Keyword(null,"x","x",2099068185),x,new cljs.core.Keyword(null,"y","y",-1757859776),y,new cljs.core.Keyword(null,"w","w",354169001),game.tile_map.tile_width,new cljs.core.Keyword(null,"h","h",1109658740),game.tile_map.tile_height], null);
 });
@@ -31,15 +35,15 @@ var draw = new cljs.core.Keyword(null,"draw","draw",1358331674).cljs$core$IFn$_i
 var x__$1 = (x * game.tile_map.tile_width);
 var y__$1 = (y * game.tile_map.tile_height);
 if(cljs.core.truth_(draw.sprite)){
-draw.sprite.background.texture = cljs.core.get.call(null,game.tile_map.tile_textures,new cljs.core.Keyword(null,"background","background",-863952629).cljs$core$IFn$_invoke$arity$1(tile));
+draw.sprite.background.texture = cljs.core.get.call(null,cljs.core.deref.call(null,game.tile_map.tile_textures),new cljs.core.Keyword(null,"background","background",-863952629).cljs$core$IFn$_invoke$arity$1(tile));
 
-draw.sprite.interactive.texture = cljs.core.get.call(null,game.tile_map.tile_textures,new cljs.core.Keyword(null,"interactive","interactive",-2024078362).cljs$core$IFn$_invoke$arity$1(tile));
+draw.sprite.interactive.texture = cljs.core.get.call(null,cljs.core.deref.call(null,game.tile_map.tile_textures),new cljs.core.Keyword(null,"interactive","interactive",-2024078362).cljs$core$IFn$_invoke$arity$1(tile));
 
-draw.sprite.foreground.texture = cljs.core.get.call(null,game.tile_map.tile_textures,new cljs.core.Keyword(null,"foreground","foreground",499022036).cljs$core$IFn$_invoke$arity$1(tile));
+draw.sprite.foreground.texture = cljs.core.get.call(null,cljs.core.deref.call(null,game.tile_map.tile_textures),new cljs.core.Keyword(null,"foreground","foreground",499022036).cljs$core$IFn$_invoke$arity$1(tile));
 } else {
-var background_26007 = (new PIXI.Sprite(cljs.core.get.call(null,game.tile_map.tile_textures,new cljs.core.Keyword(null,"background","background",-863952629).cljs$core$IFn$_invoke$arity$1(tile))));
-var interactive_26008 = (new PIXI.Sprite(cljs.core.get.call(null,game.tile_map.tile_textures,new cljs.core.Keyword(null,"interactive","interactive",-2024078362).cljs$core$IFn$_invoke$arity$1(tile))));
-var foreground_26009 = (new PIXI.Sprite(cljs.core.get.call(null,game.tile_map.tile_textures,new cljs.core.Keyword(null,"foreground","foreground",499022036).cljs$core$IFn$_invoke$arity$1(tile))));
+var background_26007 = (new PIXI.Sprite(cljs.core.get.call(null,cljs.core.deref.call(null,game.tile_map.tile_textures),new cljs.core.Keyword(null,"background","background",-863952629).cljs$core$IFn$_invoke$arity$1(tile))));
+var interactive_26008 = (new PIXI.Sprite(cljs.core.get.call(null,cljs.core.deref.call(null,game.tile_map.tile_textures),new cljs.core.Keyword(null,"interactive","interactive",-2024078362).cljs$core$IFn$_invoke$arity$1(tile))));
+var foreground_26009 = (new PIXI.Sprite(cljs.core.get.call(null,cljs.core.deref.call(null,game.tile_map.tile_textures),new cljs.core.Keyword(null,"foreground","foreground",499022036).cljs$core$IFn$_invoke$arity$1(tile))));
 background_26007.position.set(x__$1,y__$1);
 
 interactive_26008.position.set(x__$1,y__$1);
@@ -59,7 +63,7 @@ if(cljs.core.truth_(new cljs.core.Keyword(null,"editor-mode?","editor-mode?",-18
 if(cljs.core.truth_(draw.passable)){
 draw.passable.visible = (!(cljs.core.boolean$.call(null,new cljs.core.Keyword(null,"passable?","passable?",1012306625).cljs$core$IFn$_invoke$arity$1(tile))));
 } else {
-var sprite_26010 = (new PIXI.Sprite(cljs.core.get.call(null,game.tile_map.tile_textures,(1))));
+var sprite_26010 = (new PIXI.Sprite(cljs.core.get.call(null,cljs.core.deref.call(null,game.tile_map.tile_textures),(1))));
 sprite_26010.tint = (16711680);
 
 sprite_26010.visible = (!(cljs.core.boolean$.call(null,new cljs.core.Keyword(null,"passable?","passable?",1012306625).cljs$core$IFn$_invoke$arity$1(tile))));
@@ -98,6 +102,8 @@ draw.text = text_26011;
 return tile;
 });
 game.tile_map.clear_map = (function game$tile_map$clear_map(){
+game.world.clear.call(null);
+
 var map_cells = new cljs.core.Keyword(null,"map-cells","map-cells",-432327458).cljs$core$IFn$_invoke$arity$1(cljs.core.deref.call(null,game.tile_map.context));
 var n__4518__auto__ = game.tile_map.map_width;
 var x = (0);
@@ -142,9 +148,6 @@ return game.tile_map.clear_map.call(null);
 });
 game.tile_map.set_editor_mode = (function game$tile_map$set_editor_mode(b){
 return cljs.core.swap_BANG_.call(null,game.tile_map.context,cljs.core.assoc,new cljs.core.Keyword(null,"editor-mode?","editor-mode?",-1857893371),b);
-});
-game.tile_map.tile_source_rectangle = (function game$tile_map$tile_source_rectangle(tile_index){
-return new cljs.core.PersistentArrayMap(null, 4, [new cljs.core.Keyword(null,"x","x",2099068185),(cljs.core.mod.call(null,tile_index,game.tile_map.tiles_per_row) * game.tile_map.tile_width),new cljs.core.Keyword(null,"y","y",-1757859776),(Math.floor((tile_index / game.tile_map.tiles_per_row)) * game.tile_map.tile_height),new cljs.core.Keyword(null,"w","w",354169001),game.tile_map.tile_width,new cljs.core.Keyword(null,"h","h",1109658740),game.tile_map.tile_height], null);
 });
 game.tile_map.get_cell_by_pixel_x = (function game$tile_map$get_cell_by_pixel_x(pixel_x){
 return Math.floor((pixel_x / game.tile_map.tile_width));

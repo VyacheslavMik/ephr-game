@@ -9,32 +9,35 @@
 (def tile-height 48)
 (def map-width 80)
 (def map-height 80)
-(def tiles-per-row 5)
-(def tile-rows 5)
+(def tiles-per-row (atom 0))
+(def tile-rows (atom 0))
 
 (def sky-tile 2)
 
 (def context (atom {:editor-mode? false
                     :map-cells (array)}))
 
-(defn load-tiles []
-  (let [bt (js/PIXI.BaseTexture.fromImage "textures/PlatformTiles.png")]
-    (reduce (fn [acc i]
-              (assoc acc i
-                     (js/PIXI.Texture. bt
-                                       (js/PIXI.Rectangle.
-                                        (* (mod i tiles-per-row) tile-width)
-                                        (* (Math/floor (/ i tiles-per-row)) tile-height)
-                                        tile-width
-                                        tile-height)
-                                       (js/PIXI.Rectangle.
-                                        (* (mod i tiles-per-row) tile-width)
-                                        (* (Math/floor (/ i tiles-per-row)) tile-height)
-                                        tile-width
-                                        tile-height))))
-            {} (range (* tiles-per-row tile-rows)))))
+(def tile-textures (atom {}))
 
-(def tile-textures (load-tiles))
+(defn load-tiles [source]
+  (let [bt (js/PIXI.BaseTexture.from source)]
+    (reset! tiles-per-row (Math/floor (/ (.. bt -width) tile-width)))
+    (reset! tile-rows (Math/floor (/ (.. bt -height) tile-height)))
+    (reset! tile-textures
+            (reduce (fn [acc i]
+                      (assoc acc i
+                             (js/PIXI.Texture. bt
+                                               (js/PIXI.Rectangle.
+                                                (* (mod i @tiles-per-row) tile-width)
+                                                (* (Math/floor (/ i @tiles-per-row)) tile-height)
+                                                tile-width
+                                                tile-height)
+                                               (js/PIXI.Rectangle.
+                                                (* (mod i @tiles-per-row) tile-width)
+                                                (* (Math/floor (/ i @tiles-per-row)) tile-height)
+                                                tile-width
+                                                tile-height))))
+                    {} (range (* @tiles-per-row @tile-rows))))))
 
 (defn tile-rect [x y] {:x x :y y :w tile-width :h tile-height})
 
@@ -44,12 +47,12 @@
         y (* y tile-height)]
     (if (.. draw -sprite)
       (do
-        (set! (.. draw -sprite -background -texture) (get tile-textures (:background tile)))
-        (set! (.. draw -sprite -interactive -texture) (get tile-textures (:interactive tile)))
-        (set! (.. draw -sprite -foreground -texture) (get tile-textures (:foreground tile))))
-      (let [background (js/PIXI.Sprite. (get tile-textures (:background tile)))
-            interactive (js/PIXI.Sprite. (get tile-textures (:interactive tile)))
-            foreground (js/PIXI.Sprite. (get tile-textures (:foreground tile)))]
+        (set! (.. draw -sprite -background -texture) (get @tile-textures (:background tile)))
+        (set! (.. draw -sprite -interactive -texture) (get @tile-textures (:interactive tile)))
+        (set! (.. draw -sprite -foreground -texture) (get @tile-textures (:foreground tile))))
+      (let [background (js/PIXI.Sprite. (get @tile-textures (:background tile)))
+            interactive (js/PIXI.Sprite. (get @tile-textures (:interactive tile)))
+            foreground (js/PIXI.Sprite. (get @tile-textures (:foreground tile)))]
         (.. background -position (set x y))
         (.. interactive -position (set x y))
         (.. foreground -position (set x y))
@@ -62,7 +65,7 @@
     (when (:editor-mode? @context)
       (if (.. draw -passable)
         (set! (.. draw -passable -visible) (not (boolean (:passable? tile))))
-        (let [sprite (js/PIXI.Sprite. (get tile-textures 1))]
+        (let [sprite (js/PIXI.Sprite. (get @tile-textures 1))]
           (set! (.. sprite -tint) 0xff0000)
           (set! (.. sprite -visible) (not (boolean (:passable? tile))))
           (set! (.. sprite -alpha) 0.5)
@@ -84,6 +87,7 @@
     tile))
 
 (defn clear-map []
+  (world/clear)
   (let [map-cells (:map-cells @context)]
     (dotimes [x map-width]
       (dotimes [y map-height]
@@ -108,12 +112,6 @@
 
 (defn set-editor-mode [b]
   (swap! context assoc :editor-mode? b))
-
-(defn tile-source-rectangle [tile-index]
-  {:x (* (mod tile-index tiles-per-row) tile-width)
-     :y (* (Math/floor (/ tile-index tiles-per-row)) tile-height)
-     :w tile-width
-     :h tile-height})
 
 (defn get-cell-by-pixel-x [pixel-x] (Math/floor (/ pixel-x tile-width)))
 (defn get-cell-by-pixel-y [pixel-y] (Math/floor (/ pixel-y tile-height)))

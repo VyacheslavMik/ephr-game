@@ -11,8 +11,8 @@ if((typeof game !== 'undefined') && (typeof game.pixi !== 'undefined') && (typeo
 game.pixi.loaded_resources = cljs.core.atom.call(null,cljs.core.PersistentHashSet.EMPTY);
 }
 game.pixi.init = (function game$pixi$init(var_args){
-var G__26220 = arguments.length;
-switch (G__26220) {
+var G__26225 = arguments.length;
+switch (G__26225) {
 case 0:
 return game.pixi.init.cljs$core$IFn$_invoke$arity$0();
 
@@ -65,3 +65,20 @@ return app;
 
 game.pixi.init.cljs$lang$maxFixedArity = 2;
 
+game.pixi.load_resources = (function game$pixi$load_resources(app,resources,onload){
+var loading_resources = cljs.core.remove.call(null,cljs.core.deref.call(null,game.pixi.loaded_resources),resources);
+if((cljs.core.count.call(null,loading_resources) === (0))){
+} else {
+game.pixi.loader.add(cljs.core.to_array.call(null,loading_resources));
+
+game.pixi.loader.load(((function (loading_resources){
+return (function (loader,resources__$1){
+cljs.core.println.call(null,resources__$1);
+
+return onload.call(null);
+});})(loading_resources))
+);
+}
+
+return cljs.core.swap_BANG_.call(null,game.pixi.loaded_resources,clojure.set.union,cljs.core.set.call(null,resources));
+});

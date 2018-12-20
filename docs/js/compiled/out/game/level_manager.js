@@ -9,63 +9,64 @@ goog.require('game.record');
 goog.require('game.practitioner');
 goog.require('game.game_object');
 goog.require('game.beldam');
+goog.require('game.spike');
 goog.require('game.nurse');
 goog.require('game.world');
 goog.require('game.animation_strip');
 goog.require('game.tile_map');
 game.level_manager.context = cljs.core.atom.call(null,cljs.core.PersistentArrayMap.EMPTY);
 game.level_manager.remove_object = (function game$level_manager$remove_object(game_object){
-var seq__26062 = cljs.core.seq.call(null,new cljs.core.Keyword(null,"animations","animations",140711296).cljs$core$IFn$_invoke$arity$1(game_object));
-var chunk__26063 = null;
-var count__26064 = (0);
-var i__26065 = (0);
+var seq__26064 = cljs.core.seq.call(null,new cljs.core.Keyword(null,"animations","animations",140711296).cljs$core$IFn$_invoke$arity$1(game_object));
+var chunk__26065 = null;
+var count__26066 = (0);
+var i__26067 = (0);
 while(true){
-if((i__26065 < count__26064)){
-var vec__26066 = cljs.core._nth.call(null,chunk__26063,i__26065);
-var _ = cljs.core.nth.call(null,vec__26066,(0),null);
-var animation = cljs.core.nth.call(null,vec__26066,(1),null);
+if((i__26067 < count__26066)){
+var vec__26068 = cljs.core._nth.call(null,chunk__26065,i__26067);
+var _ = cljs.core.nth.call(null,vec__26068,(0),null);
+var animation = cljs.core.nth.call(null,vec__26068,(1),null);
 game.animation_strip.stop.call(null,animation);
 
 
-var G__26072 = seq__26062;
-var G__26073 = chunk__26063;
-var G__26074 = count__26064;
-var G__26075 = (i__26065 + (1));
-seq__26062 = G__26072;
-chunk__26063 = G__26073;
-count__26064 = G__26074;
-i__26065 = G__26075;
+var G__26074 = seq__26064;
+var G__26075 = chunk__26065;
+var G__26076 = count__26066;
+var G__26077 = (i__26067 + (1));
+seq__26064 = G__26074;
+chunk__26065 = G__26075;
+count__26066 = G__26076;
+i__26067 = G__26077;
 continue;
 } else {
-var temp__5457__auto__ = cljs.core.seq.call(null,seq__26062);
+var temp__5457__auto__ = cljs.core.seq.call(null,seq__26064);
 if(temp__5457__auto__){
-var seq__26062__$1 = temp__5457__auto__;
-if(cljs.core.chunked_seq_QMARK_.call(null,seq__26062__$1)){
-var c__4461__auto__ = cljs.core.chunk_first.call(null,seq__26062__$1);
-var G__26076 = cljs.core.chunk_rest.call(null,seq__26062__$1);
-var G__26077 = c__4461__auto__;
-var G__26078 = cljs.core.count.call(null,c__4461__auto__);
-var G__26079 = (0);
-seq__26062 = G__26076;
-chunk__26063 = G__26077;
-count__26064 = G__26078;
-i__26065 = G__26079;
+var seq__26064__$1 = temp__5457__auto__;
+if(cljs.core.chunked_seq_QMARK_.call(null,seq__26064__$1)){
+var c__4461__auto__ = cljs.core.chunk_first.call(null,seq__26064__$1);
+var G__26078 = cljs.core.chunk_rest.call(null,seq__26064__$1);
+var G__26079 = c__4461__auto__;
+var G__26080 = cljs.core.count.call(null,c__4461__auto__);
+var G__26081 = (0);
+seq__26064 = G__26078;
+chunk__26065 = G__26079;
+count__26066 = G__26080;
+i__26067 = G__26081;
 continue;
 } else {
-var vec__26069 = cljs.core.first.call(null,seq__26062__$1);
-var _ = cljs.core.nth.call(null,vec__26069,(0),null);
-var animation = cljs.core.nth.call(null,vec__26069,(1),null);
+var vec__26071 = cljs.core.first.call(null,seq__26064__$1);
+var _ = cljs.core.nth.call(null,vec__26071,(0),null);
+var animation = cljs.core.nth.call(null,vec__26071,(1),null);
 game.animation_strip.stop.call(null,animation);
 
 
-var G__26080 = cljs.core.next.call(null,seq__26062__$1);
-var G__26081 = null;
-var G__26082 = (0);
-var G__26083 = (0);
-seq__26062 = G__26080;
-chunk__26063 = G__26081;
-count__26064 = G__26082;
-i__26065 = G__26083;
+var G__26082 = cljs.core.next.call(null,seq__26064__$1);
+var G__26083 = null;
+var G__26084 = (0);
+var G__26085 = (0);
+seq__26064 = G__26082;
+chunk__26065 = G__26083;
+count__26066 = G__26084;
+i__26067 = G__26085;
 continue;
 }
 } else {
@@ -95,39 +96,44 @@ cljs.core.swap_BANG_.call(null,game.level_manager.context,cljs.core.assoc,new cl
 
 cljs.core.swap_BANG_.call(null,game.level_manager.context,cljs.core.assoc,new cljs.core.Keyword(null,"nurses","nurses",-1762810457),cljs.core.PersistentVector.EMPTY);
 
-var n__4518__auto___26084 = game.tile_map.map_width;
-var x_26085 = (0);
+var n__4518__auto___26086 = game.tile_map.map_width;
+var x_26087 = (0);
 while(true){
-if((x_26085 < n__4518__auto___26084)){
-var n__4518__auto___26086__$1 = game.tile_map.map_height;
-var y_26087 = (0);
+if((x_26087 < n__4518__auto___26086)){
+var n__4518__auto___26088__$1 = game.tile_map.map_height;
+var y_26089 = (0);
 while(true){
-if((y_26087 < n__4518__auto___26086__$1)){
-var code_26088 = game.tile_map.cell_code_value.call(null,x_26085,y_26087);
-if(cljs.core._EQ_.call(null,code_26088,"START")){
-cljs.core.swap_BANG_.call(null,game.level_manager.context,cljs.core.update,new cljs.core.Keyword(null,"patient","patient",1178852672),((function (y_26087,x_26085,code_26088,n__4518__auto___26086__$1,n__4518__auto___26084){
+if((y_26089 < n__4518__auto___26088__$1)){
+var code_26090 = game.tile_map.cell_code_value.call(null,x_26087,y_26089);
+if(cljs.core._EQ_.call(null,code_26090,"START")){
+cljs.core.swap_BANG_.call(null,game.level_manager.context,cljs.core.update,new cljs.core.Keyword(null,"patient","patient",1178852672),((function (y_26089,x_26087,code_26090,n__4518__auto___26088__$1,n__4518__auto___26086){
 return (function (patient){
-return game.patient.play_animation.call(null,cljs.core.assoc.call(null,patient,new cljs.core.Keyword(null,"world-location","world-location",-1928727782),new cljs.core.PersistentArrayMap(null, 2, [new cljs.core.Keyword(null,"x","x",2099068185),(x_26085 * game.tile_map.tile_width),new cljs.core.Keyword(null,"y","y",-1757859776),(y_26087 * game.tile_map.tile_height)], null)),"idle");
-});})(y_26087,x_26085,code_26088,n__4518__auto___26086__$1,n__4518__auto___26084))
+return game.patient.play_animation.call(null,cljs.core.assoc.call(null,patient,new cljs.core.Keyword(null,"world-location","world-location",-1928727782),new cljs.core.PersistentArrayMap(null, 2, [new cljs.core.Keyword(null,"x","x",2099068185),(x_26087 * game.tile_map.tile_width),new cljs.core.Keyword(null,"y","y",-1757859776),(((y_26089 + (1)) * game.tile_map.tile_height) - new cljs.core.Keyword(null,"frame-height","frame-height",1932367973).cljs$core$IFn$_invoke$arity$1(patient))], null)),"idle");
+});})(y_26089,x_26087,code_26090,n__4518__auto___26088__$1,n__4518__auto___26086))
 );
 } else {
 }
 
-if(cljs.core._EQ_.call(null,code_26088,"NURSE")){
-cljs.core.swap_BANG_.call(null,game.level_manager.context,cljs.core.update,new cljs.core.Keyword(null,"nurses","nurses",-1762810457),cljs.core.conj,game.nurse.new_nurse.call(null,x_26085,y_26087));
+if(cljs.core._EQ_.call(null,code_26090,"BELDAM")){
+cljs.core.swap_BANG_.call(null,game.level_manager.context,cljs.core.update,new cljs.core.Keyword(null,"beldams","beldams",371251070),cljs.core.conj,game.beldam.new_beldam.call(null,x_26087,y_26089));
 } else {
 }
 
-var G__26089 = (y_26087 + (1));
-y_26087 = G__26089;
+if(cljs.core._EQ_.call(null,code_26090,"NURSE")){
+cljs.core.swap_BANG_.call(null,game.level_manager.context,cljs.core.update,new cljs.core.Keyword(null,"nurses","nurses",-1762810457),cljs.core.conj,game.nurse.new_nurse.call(null,x_26087,y_26089));
+} else {
+}
+
+var G__26091 = (y_26089 + (1));
+y_26089 = G__26091;
 continue;
 } else {
 }
 break;
 }
 
-var G__26090 = (x_26085 + (1));
-x_26085 = G__26090;
+var G__26092 = (x_26087 + (1));
+x_26087 = G__26092;
 continue;
 } else {
 }
@@ -204,7 +210,25 @@ return cljs.core.update.call(null,acc,new cljs.core.Keyword(null,"practitioners"
 ,new cljs.core.PersistentArrayMap(null, 2, [new cljs.core.Keyword(null,"patient","patient",1178852672),patient,new cljs.core.Keyword(null,"practitioners","practitioners",-821312252),cljs.core.PersistentVector.EMPTY], null),practitioners__$1);
 });
 game.level_manager.update_spikes = (function game$level_manager$update_spikes(patient,spikes,elapsed){
+var spikes__$1 = cljs.core.mapv.call(null,(function (spike){
+return game.game_object.update_STAR_.call(null,spike,elapsed);
+}),spikes);
+return cljs.core.reduce.call(null,((function (spikes__$1){
+return (function (acc,spike){
+if(game.utils.rectangle_intersects_QMARK_.call(null,game.game_object.collision_rectangle.call(null,spike),game.game_object.collision_rectangle.call(null,patient))){
+return cljs.core.assoc.call(null,acc,new cljs.core.Keyword(null,"patient","patient",1178852672),game.patient.kill.call(null,patient));
+} else {
+return cljs.core.update.call(null,acc,new cljs.core.Keyword(null,"spikes","spikes",289662129),cljs.core.conj,spike);
+}
+});})(spikes__$1))
+,new cljs.core.PersistentArrayMap(null, 2, [new cljs.core.Keyword(null,"patient","patient",1178852672),patient,new cljs.core.Keyword(null,"spikes","spikes",289662129),cljs.core.PersistentVector.EMPTY], null),spikes__$1);
+});
+game.level_manager.throw_spike = (function game$level_manager$throw_spike(beldam,patient){
+if((new cljs.core.Keyword(null,"last-throw-time","last-throw-time",1051004820).cljs$core$IFn$_invoke$arity$1(beldam) > (2))){
+return game.spike.new_spike.call(null,cljs.core.update.call(null,new cljs.core.Keyword(null,"world-location","world-location",-1928727782).cljs$core$IFn$_invoke$arity$1(beldam),new cljs.core.Keyword(null,"y","y",-1757859776),cljs.core._PLUS_,cljs.core.rand_int.call(null,new cljs.core.Keyword(null,"frame-height","frame-height",1932367973).cljs$core$IFn$_invoke$arity$1(beldam))),new cljs.core.PersistentArrayMap(null, 2, [new cljs.core.Keyword(null,"x","x",2099068185),(-1),new cljs.core.Keyword(null,"y","y",-1757859776),(0)], null));
+} else {
 return null;
+}
 });
 game.level_manager.update_beldams = (function game$level_manager$update_beldams(patient,beldams,elapsed){
 var beldams__$1 = cljs.core.mapv.call(null,(function (beldam){
@@ -212,29 +236,39 @@ return game.beldam.update_STAR_.call(null,beldam,elapsed);
 }),beldams);
 return cljs.core.reduce.call(null,((function (beldams__$1){
 return (function (acc,beldam){
-if(cljs.core.truth_(new cljs.core.Keyword(null,"dead?","dead?",990391228).cljs$core$IFn$_invoke$arity$1(beldam))){
-if(cljs.core.truth_(new cljs.core.Keyword(null,"enabled?","enabled?",-1376075057).cljs$core$IFn$_invoke$arity$1(beldam))){
-return cljs.core.update.call(null,acc,new cljs.core.Keyword(null,"beldams","beldams",371251070),cljs.core.conj,beldam);
+var beldam__$1 = cljs.core.update.call(null,beldam,new cljs.core.Keyword(null,"last-throw-time","last-throw-time",1051004820),cljs.core._PLUS_,elapsed);
+var spike = game.level_manager.throw_spike.call(null,beldam__$1,patient);
+var beldam__$2 = (cljs.core.truth_(spike)?cljs.core.assoc.call(null,beldam__$1,new cljs.core.Keyword(null,"last-throw-time","last-throw-time",1051004820),(0)):beldam__$1);
+if(cljs.core.truth_(new cljs.core.Keyword(null,"dead?","dead?",990391228).cljs$core$IFn$_invoke$arity$1(beldam__$2))){
+if(cljs.core.truth_(new cljs.core.Keyword(null,"enabled?","enabled?",-1376075057).cljs$core$IFn$_invoke$arity$1(beldam__$2))){
+return cljs.core.update.call(null,acc,new cljs.core.Keyword(null,"beldams","beldams",371251070),cljs.core.conj,beldam__$2);
 } else {
-game.level_manager.remove_object.call(null,beldam);
+game.level_manager.remove_object.call(null,beldam__$2);
 
 return acc;
 }
 } else {
-if(game.utils.rectangle_intersects_QMARK_.call(null,game.game_object.collision_rectangle.call(null,patient),game.game_object.collision_rectangle.call(null,beldam))){
-if((new cljs.core.Keyword(null,"y","y",-1757859776).cljs$core$IFn$_invoke$arity$1(game.game_object.world_center.call(null,new cljs.core.Keyword(null,"patient","patient",1178852672).cljs$core$IFn$_invoke$arity$1(acc))) < new cljs.core.Keyword(null,"y","y",-1757859776).cljs$core$IFn$_invoke$arity$1(new cljs.core.Keyword(null,"world-location","world-location",-1928727782).cljs$core$IFn$_invoke$arity$1(beldam)))){
+if(game.utils.rectangle_intersects_QMARK_.call(null,game.game_object.collision_rectangle.call(null,patient),game.game_object.collision_rectangle.call(null,beldam__$2))){
+if((new cljs.core.Keyword(null,"y","y",-1757859776).cljs$core$IFn$_invoke$arity$1(game.game_object.world_center.call(null,new cljs.core.Keyword(null,"patient","patient",1178852672).cljs$core$IFn$_invoke$arity$1(acc))) < new cljs.core.Keyword(null,"y","y",-1757859776).cljs$core$IFn$_invoke$arity$1(new cljs.core.Keyword(null,"world-location","world-location",-1928727782).cljs$core$IFn$_invoke$arity$1(beldam__$2)))){
 var patient__$1 = cljs.core.update.call(null,game.patient.jump.call(null,new cljs.core.Keyword(null,"patient","patient",1178852672).cljs$core$IFn$_invoke$arity$1(acc)),new cljs.core.Keyword(null,"score","score",-1963588780),cljs.core._PLUS_,(5));
-var beldam__$1 = cljs.core.assoc.call(null,game.game_object.play_animation.call(null,beldam,"die"),new cljs.core.Keyword(null,"dead?","dead?",990391228),true,new cljs.core.Keyword(null,"velocity","velocity",-581524355),new cljs.core.PersistentArrayMap(null, 2, [new cljs.core.Keyword(null,"x","x",2099068185),(0),new cljs.core.Keyword(null,"y","y",-1757859776),(0)], null));
-return cljs.core.update.call(null,cljs.core.assoc.call(null,acc,new cljs.core.Keyword(null,"patient","patient",1178852672),patient__$1),new cljs.core.Keyword(null,"beldams","beldams",371251070),cljs.core.conj,beldam__$1);
+var beldam__$3 = cljs.core.assoc.call(null,game.game_object.play_animation.call(null,beldam__$2,"die"),new cljs.core.Keyword(null,"dead?","dead?",990391228),true,new cljs.core.Keyword(null,"velocity","velocity",-581524355),new cljs.core.PersistentArrayMap(null, 2, [new cljs.core.Keyword(null,"x","x",2099068185),(0),new cljs.core.Keyword(null,"y","y",-1757859776),(0)], null));
+return cljs.core.update.call(null,cljs.core.assoc.call(null,acc,new cljs.core.Keyword(null,"patient","patient",1178852672),patient__$1),new cljs.core.Keyword(null,"beldams","beldams",371251070),cljs.core.conj,beldam__$3);
 } else {
-return cljs.core.update.call(null,cljs.core.assoc.call(null,acc,new cljs.core.Keyword(null,"patient","patient",1178852672),game.patient.kill.call(null,patient)),new cljs.core.Keyword(null,"beldams","beldams",371251070),cljs.core.conj,beldam);
+return cljs.core.update.call(null,cljs.core.assoc.call(null,acc,new cljs.core.Keyword(null,"patient","patient",1178852672),game.patient.kill.call(null,patient)),new cljs.core.Keyword(null,"beldams","beldams",371251070),cljs.core.conj,beldam__$2);
 }
 } else {
-return cljs.core.update.call(null,acc,new cljs.core.Keyword(null,"beldams","beldams",371251070),cljs.core.conj,beldam);
+var G__26093 = acc;
+var G__26093__$1 = cljs.core.update.call(null,G__26093,new cljs.core.Keyword(null,"beldams","beldams",371251070),cljs.core.conj,beldam__$2)
+;
+if(cljs.core.truth_(spike)){
+return cljs.core.update.call(null,G__26093__$1,new cljs.core.Keyword(null,"new-spikes","new-spikes",-1733374039),cljs.core.conj,spike);
+} else {
+return G__26093__$1;
+}
 }
 }
 });})(beldams__$1))
-,new cljs.core.PersistentArrayMap(null, 2, [new cljs.core.Keyword(null,"patient","patient",1178852672),patient,new cljs.core.Keyword(null,"beldams","beldams",371251070),cljs.core.PersistentVector.EMPTY], null),beldams__$1);
+,new cljs.core.PersistentArrayMap(null, 3, [new cljs.core.Keyword(null,"patient","patient",1178852672),patient,new cljs.core.Keyword(null,"beldams","beldams",371251070),cljs.core.PersistentVector.EMPTY,new cljs.core.Keyword(null,"new-spikes","new-spikes",-1733374039),cljs.core.PersistentVector.EMPTY], null),beldams__$1);
 });
 game.level_manager.update_nurses = (function game$level_manager$update_nurses(patient,nurses,elapsed){
 var nurses__$1 = cljs.core.mapv.call(null,(function (nurse){
@@ -257,37 +291,45 @@ game.level_manager.update_STAR_ = (function game$level_manager$update_STAR_(elap
 if(cljs.core.truth_(new cljs.core.Keyword(null,"loading?","loading?",1905707049).cljs$core$IFn$_invoke$arity$1(cljs.core.deref.call(null,game.level_manager.context)))){
 return null;
 } else {
-var map__26091 = cljs.core.deref.call(null,game.level_manager.context);
-var map__26091__$1 = (((((!((map__26091 == null))))?(((((map__26091.cljs$lang$protocol_mask$partition0$ & (64))) || ((cljs.core.PROTOCOL_SENTINEL === map__26091.cljs$core$ISeq$))))?true:false):false))?cljs.core.apply.call(null,cljs.core.hash_map,map__26091):map__26091);
-var patient = cljs.core.get.call(null,map__26091__$1,new cljs.core.Keyword(null,"patient","patient",1178852672));
-var records = cljs.core.get.call(null,map__26091__$1,new cljs.core.Keyword(null,"records","records",1326822832));
-var practitioners = cljs.core.get.call(null,map__26091__$1,new cljs.core.Keyword(null,"practitioners","practitioners",-821312252));
-var beldams = cljs.core.get.call(null,map__26091__$1,new cljs.core.Keyword(null,"beldams","beldams",371251070));
-var nurses = cljs.core.get.call(null,map__26091__$1,new cljs.core.Keyword(null,"nurses","nurses",-1762810457));
-var patient__$1 = game.level_manager.check_current_cell_code.call(null,game.patient.update_STAR_.call(null,patient,elapsed));
-var map__26092 = game.level_manager.update_records.call(null,patient__$1,records,elapsed);
-var map__26092__$1 = (((((!((map__26092 == null))))?(((((map__26092.cljs$lang$protocol_mask$partition0$ & (64))) || ((cljs.core.PROTOCOL_SENTINEL === map__26092.cljs$core$ISeq$))))?true:false):false))?cljs.core.apply.call(null,cljs.core.hash_map,map__26092):map__26092);
-var patient__$2 = cljs.core.get.call(null,map__26092__$1,new cljs.core.Keyword(null,"patient","patient",1178852672));
-var records__$1 = cljs.core.get.call(null,map__26092__$1,new cljs.core.Keyword(null,"records","records",1326822832));
-var map__26093 = game.level_manager.update_practitioners.call(null,patient__$2,practitioners,elapsed);
-var map__26093__$1 = (((((!((map__26093 == null))))?(((((map__26093.cljs$lang$protocol_mask$partition0$ & (64))) || ((cljs.core.PROTOCOL_SENTINEL === map__26093.cljs$core$ISeq$))))?true:false):false))?cljs.core.apply.call(null,cljs.core.hash_map,map__26093):map__26093);
-var patient__$3 = cljs.core.get.call(null,map__26093__$1,new cljs.core.Keyword(null,"patient","patient",1178852672));
-var practitioners__$1 = cljs.core.get.call(null,map__26093__$1,new cljs.core.Keyword(null,"practitioners","practitioners",-821312252));
-var map__26094 = game.level_manager.update_beldams.call(null,patient__$3,beldams,elapsed);
+var map__26094 = cljs.core.deref.call(null,game.level_manager.context);
 var map__26094__$1 = (((((!((map__26094 == null))))?(((((map__26094.cljs$lang$protocol_mask$partition0$ & (64))) || ((cljs.core.PROTOCOL_SENTINEL === map__26094.cljs$core$ISeq$))))?true:false):false))?cljs.core.apply.call(null,cljs.core.hash_map,map__26094):map__26094);
-var patient__$4 = cljs.core.get.call(null,map__26094__$1,new cljs.core.Keyword(null,"patient","patient",1178852672));
-var beldams__$1 = cljs.core.get.call(null,map__26094__$1,new cljs.core.Keyword(null,"beldams","beldams",371251070));
-var map__26095 = game.level_manager.update_nurses.call(null,patient__$4,nurses,elapsed);
+var patient = cljs.core.get.call(null,map__26094__$1,new cljs.core.Keyword(null,"patient","patient",1178852672));
+var records = cljs.core.get.call(null,map__26094__$1,new cljs.core.Keyword(null,"records","records",1326822832));
+var practitioners = cljs.core.get.call(null,map__26094__$1,new cljs.core.Keyword(null,"practitioners","practitioners",-821312252));
+var beldams = cljs.core.get.call(null,map__26094__$1,new cljs.core.Keyword(null,"beldams","beldams",371251070));
+var nurses = cljs.core.get.call(null,map__26094__$1,new cljs.core.Keyword(null,"nurses","nurses",-1762810457));
+var spikes = cljs.core.get.call(null,map__26094__$1,new cljs.core.Keyword(null,"spikes","spikes",289662129));
+var patient__$1 = game.level_manager.check_current_cell_code.call(null,game.patient.update_STAR_.call(null,patient,elapsed));
+var map__26095 = game.level_manager.update_records.call(null,patient__$1,records,elapsed);
 var map__26095__$1 = (((((!((map__26095 == null))))?(((((map__26095.cljs$lang$protocol_mask$partition0$ & (64))) || ((cljs.core.PROTOCOL_SENTINEL === map__26095.cljs$core$ISeq$))))?true:false):false))?cljs.core.apply.call(null,cljs.core.hash_map,map__26095):map__26095);
-var patient__$5 = cljs.core.get.call(null,map__26095__$1,new cljs.core.Keyword(null,"patient","patient",1178852672));
-var nurses__$1 = cljs.core.get.call(null,map__26095__$1,new cljs.core.Keyword(null,"nurses","nurses",-1762810457));
-cljs.core.swap_BANG_.call(null,game.level_manager.context,cljs.core.assoc,new cljs.core.Keyword(null,"patient","patient",1178852672),patient__$5);
+var patient__$2 = cljs.core.get.call(null,map__26095__$1,new cljs.core.Keyword(null,"patient","patient",1178852672));
+var records__$1 = cljs.core.get.call(null,map__26095__$1,new cljs.core.Keyword(null,"records","records",1326822832));
+var map__26096 = game.level_manager.update_practitioners.call(null,patient__$2,practitioners,elapsed);
+var map__26096__$1 = (((((!((map__26096 == null))))?(((((map__26096.cljs$lang$protocol_mask$partition0$ & (64))) || ((cljs.core.PROTOCOL_SENTINEL === map__26096.cljs$core$ISeq$))))?true:false):false))?cljs.core.apply.call(null,cljs.core.hash_map,map__26096):map__26096);
+var patient__$3 = cljs.core.get.call(null,map__26096__$1,new cljs.core.Keyword(null,"patient","patient",1178852672));
+var practitioners__$1 = cljs.core.get.call(null,map__26096__$1,new cljs.core.Keyword(null,"practitioners","practitioners",-821312252));
+var map__26097 = game.level_manager.update_spikes.call(null,patient__$3,spikes,elapsed);
+var map__26097__$1 = (((((!((map__26097 == null))))?(((((map__26097.cljs$lang$protocol_mask$partition0$ & (64))) || ((cljs.core.PROTOCOL_SENTINEL === map__26097.cljs$core$ISeq$))))?true:false):false))?cljs.core.apply.call(null,cljs.core.hash_map,map__26097):map__26097);
+var patient__$4 = cljs.core.get.call(null,map__26097__$1,new cljs.core.Keyword(null,"patient","patient",1178852672));
+var spikes__$1 = cljs.core.get.call(null,map__26097__$1,new cljs.core.Keyword(null,"spikes","spikes",289662129));
+var map__26098 = game.level_manager.update_beldams.call(null,patient__$4,beldams,elapsed);
+var map__26098__$1 = (((((!((map__26098 == null))))?(((((map__26098.cljs$lang$protocol_mask$partition0$ & (64))) || ((cljs.core.PROTOCOL_SENTINEL === map__26098.cljs$core$ISeq$))))?true:false):false))?cljs.core.apply.call(null,cljs.core.hash_map,map__26098):map__26098);
+var patient__$5 = cljs.core.get.call(null,map__26098__$1,new cljs.core.Keyword(null,"patient","patient",1178852672));
+var beldams__$1 = cljs.core.get.call(null,map__26098__$1,new cljs.core.Keyword(null,"beldams","beldams",371251070));
+var new_spikes = cljs.core.get.call(null,map__26098__$1,new cljs.core.Keyword(null,"new-spikes","new-spikes",-1733374039));
+var map__26099 = game.level_manager.update_nurses.call(null,patient__$5,nurses,elapsed);
+var map__26099__$1 = (((((!((map__26099 == null))))?(((((map__26099.cljs$lang$protocol_mask$partition0$ & (64))) || ((cljs.core.PROTOCOL_SENTINEL === map__26099.cljs$core$ISeq$))))?true:false):false))?cljs.core.apply.call(null,cljs.core.hash_map,map__26099):map__26099);
+var patient__$6 = cljs.core.get.call(null,map__26099__$1,new cljs.core.Keyword(null,"patient","patient",1178852672));
+var nurses__$1 = cljs.core.get.call(null,map__26099__$1,new cljs.core.Keyword(null,"nurses","nurses",-1762810457));
+cljs.core.swap_BANG_.call(null,game.level_manager.context,cljs.core.assoc,new cljs.core.Keyword(null,"patient","patient",1178852672),patient__$6);
 
 cljs.core.swap_BANG_.call(null,game.level_manager.context,cljs.core.assoc,new cljs.core.Keyword(null,"records","records",1326822832),records__$1);
 
 cljs.core.swap_BANG_.call(null,game.level_manager.context,cljs.core.assoc,new cljs.core.Keyword(null,"beldams","beldams",371251070),beldams__$1);
 
 cljs.core.swap_BANG_.call(null,game.level_manager.context,cljs.core.assoc,new cljs.core.Keyword(null,"nurses","nurses",-1762810457),nurses__$1);
+
+cljs.core.swap_BANG_.call(null,game.level_manager.context,cljs.core.assoc,new cljs.core.Keyword(null,"spikes","spikes",289662129),cljs.core.into.call(null,spikes__$1,new_spikes));
 
 return cljs.core.swap_BANG_.call(null,game.level_manager.context,cljs.core.assoc,new cljs.core.Keyword(null,"practitioners","practitioners",-821312252),practitioners__$1);
 }

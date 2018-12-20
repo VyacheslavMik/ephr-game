@@ -141,6 +141,9 @@
     (.. root (addChild game-over-text))
     (run (pixi/init
           ["textures/PlatformTiles.png"
+
+           "textures/Spike.png"
+
            "textures/Sprites/Patient/Idle.png"
            "textures/Sprites/Patient/Die.png"
            "textures/Sprites/Patient/Jump.png"
