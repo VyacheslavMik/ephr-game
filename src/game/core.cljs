@@ -124,7 +124,6 @@
 (defn ^:export init []
   (swap! context assoc :state :title-screen)
   (swap! context assoc :death-timer 0)
-  (tile-map/initialize false)
 
   (camera/initialize {:view-port-width 800
                       :view-port-height 600
@@ -154,5 +153,7 @@
            "textures/Sprites/Beldam/Run.png"
 
            "textures/Sprites/Nurse/Run.png"]
-          #()) update* root)
+          #(do
+             (tile-map/load-tiles "textures/PlatformTiles.png")
+             (tile-map/initialize false))) update* root)
     (swap! context assoc :initialized? true)))

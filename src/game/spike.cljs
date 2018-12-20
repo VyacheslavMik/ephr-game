@@ -22,5 +22,17 @@
                :frame-width 48
                :frame-height 4
                :collision-rectangle {:x 0 :y 0 :width 48 :height 4}
+               :short? true
+               :code-based-blocks? false
                :enabled? true)
         (game-object/play-animation "default"))))
+
+(defn exhausted? [spike world-location]
+  (if (= world-location (:world-location spike))
+    (assoc spike :enabled? false)
+    spike))
+
+(defn update* [spike elapsed]
+  (-> spike
+      (game-object/update* elapsed)
+      (exhausted? (:world-location spike))))

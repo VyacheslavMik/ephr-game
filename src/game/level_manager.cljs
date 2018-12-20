@@ -31,6 +31,7 @@
                (swap! context assoc :records [])
                (swap! context assoc :practitioners [])
                (swap! context assoc :beldams [])
+               (swap! context assoc :spikes [])
                (swap! context assoc :nurses [])
                (dotimes [x tile-map/map-width]
                  (dotimes [y tile-map/map-height]
@@ -115,20 +116,30 @@
 
 (defn update-spikes [patient spikes elapsed]
   (let [spikes (mapv (fn [spike]
-                       (game-object/update* spike elapsed))
+                       (spike/update* spike elapsed))
                      spikes)]
     (reduce (fn [acc spike]
-              (if (u/rectangle-intersects? (game-object/collision-rectangle spike)
-                                           (game-object/collision-rectangle patient))
-                (assoc acc :patient (patient/kill patient))
-                (update acc :spikes conj spike)))
+              (if (:enabled? spike)
+                (if (and
+                     (not (:dead? patient))
+                     (u/rectangle-intersects? (game-object/collision-rectangle spike)
+                                              (game-object/collision-rectangle patient)))
+                  (do
+                    (remove-object spike)
+                    (assoc acc :patient (patient/kill patient)))
+                  (update acc :spikes conj spike))
+                (do
+                  (remove-object spike)
+                  acc)))
             {:patient patient :spikes []} spikes)))
 
 (defn throw-spike [beldam patient]
   (when (> (:last-throw-time beldam) 2)
-    (spike/new-spike (update (:world-location beldam)
-                             :y + (rand-int (:frame-height beldam)))
-                     {:x -1 :y 0})))
+    (let [distance (- (-> patient :world-location :x) (-> beldam :world-location :x))]
+      (when (< (Math/abs distance) 200)
+        (spike/new-spike (update (:world-location beldam)
+                                 :y + (rand-int (:frame-height beldam)))
+                         {:x (if (< distance 0) -1 1) :y 0})))))
 
 (defn update-beldams [patient beldams elapsed]
   (let [beldams (mapv (fn [beldam]
