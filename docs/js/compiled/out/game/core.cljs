@@ -55,7 +55,17 @@
     (case state
       :title-screen
       (do
-        (when (or (controls/key-pressed? :Space) (controls/get-touch-state))
+        ;; tmp
+        (swap! context update :tmp-time + elapsed)
+        (when (> (:tmp-time @context) 0.5)
+          (start-new-game)
+          (swap! context assoc :state :playing)
+          (set! (.. background -visible) false)
+          (set! (.. camera/container -visible) true)
+          (set! (.. score-text -visible) true)
+          (set! (.. lives-text -visible) true))
+
+        #_(when (or (controls/key-pressed? :Space) (controls/get-touch-state))
           (start-new-game)
           (swap! context assoc :state :playing)
           (set! (.. background -visible) false)
@@ -134,6 +144,12 @@
            "textures/Sprites/Patient/Idle.png"
            "textures/Sprites/Patient/Die.png"
            "textures/Sprites/Patient/Jump.png"
-           "textures/Sprites/Patient/Run.png"]
+           "textures/Sprites/Patient/Run.png"
+           
+           "textures/Sprites/Beldam/Idle.png"
+           "textures/Sprites/Beldam/Die.png"
+           "textures/Sprites/Beldam/Run.png"
+
+           "textures/Sprites/Nurse/Run.png"]
           #()) update* root)
     (swap! context assoc :initialized? true)))

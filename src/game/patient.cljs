@@ -21,6 +21,9 @@
                               (anim/update-animation-strip))
                     "jump" (-> (anim/new-animation-strip (texture-path "Jump.png") 48 "jump")
                                (assoc :loop-animation? false
+                                      :frame-delay 0.02
+                                      :next-animation "idle")
+                               #_(assoc :loop-animation? false
                                       :frame-delay 0.2
                                       :next-animation "idle")
                                (anim/update-animation-strip))
@@ -36,9 +39,8 @@
                :score 0
                :lives-remaining 3
                :frame-width 48
-               :frame-height 48
-               :collision-rectangle {:x 9 :y 1 :width 30 :height 46}
-               :draw-depth 6
+               :frame-height 120
+               :collision-rectangle {:x 0 :y 0 :width 48 :height 119}
                :enabled? true
                :load-level load-level
                :context context
@@ -127,7 +129,7 @@
           velocity (if (and (or (controls/key-pressed? :Space)
                                 (touch-top patient))
                             (:on-ground? patient))
-                     (update velocity :y - 500)
+                     (update velocity :y - 700)
                      velocity)
           new-animation (if (and (or (controls/key-pressed? :Space)
                                      (touch-top patient))

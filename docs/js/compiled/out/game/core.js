@@ -70,21 +70,17 @@ game.level_manager.init.call(null);
 return game.level_manager.load_level.call(null,(0));
 });
 game.core.update_STAR_ = (function game$core$update_STAR_(delta){
-var map__26230 = cljs.core.deref.call(null,game.core.context);
-var map__26230__$1 = (((((!((map__26230 == null))))?(((((map__26230.cljs$lang$protocol_mask$partition0$ & (64))) || ((cljs.core.PROTOCOL_SENTINEL === map__26230.cljs$core$ISeq$))))?true:false):false))?cljs.core.apply.call(null,cljs.core.hash_map,map__26230):map__26230);
-var state = cljs.core.get.call(null,map__26230__$1,new cljs.core.Keyword(null,"state","state",-1988618099));
+var map__26238 = cljs.core.deref.call(null,game.core.context);
+var map__26238__$1 = (((((!((map__26238 == null))))?(((((map__26238.cljs$lang$protocol_mask$partition0$ & (64))) || ((cljs.core.PROTOCOL_SENTINEL === map__26238.cljs$core$ISeq$))))?true:false):false))?cljs.core.apply.call(null,cljs.core.hash_map,map__26238):map__26238);
+var state = cljs.core.get.call(null,map__26238__$1,new cljs.core.Keyword(null,"state","state",-1988618099));
 var elapsed = (delta * 0.001);
-var G__26232 = state;
-var G__26232__$1 = (((G__26232 instanceof cljs.core.Keyword))?G__26232.fqn:null);
-switch (G__26232__$1) {
+var G__26240 = state;
+var G__26240__$1 = (((G__26240 instanceof cljs.core.Keyword))?G__26240.fqn:null);
+switch (G__26240__$1) {
 case "title-screen":
-if(cljs.core.truth_((function (){var or__4047__auto__ = game.controls.key_pressed_QMARK_.call(null,new cljs.core.Keyword(null,"Space","Space",1500017025));
-if(cljs.core.truth_(or__4047__auto__)){
-return or__4047__auto__;
-} else {
-return game.controls.get_touch_state.call(null);
-}
-})())){
+cljs.core.swap_BANG_.call(null,game.core.context,cljs.core.update,new cljs.core.Keyword(null,"tmp-time","tmp-time",-1952186664),cljs.core._PLUS_,elapsed);
+
+if((new cljs.core.Keyword(null,"tmp-time","tmp-time",-1952186664).cljs$core$IFn$_invoke$arity$1(cljs.core.deref.call(null,game.core.context)) > 0.5)){
 game.core.start_new_game.call(null);
 
 cljs.core.swap_BANG_.call(null,game.core.context,cljs.core.assoc,new cljs.core.Keyword(null,"state","state",-1988618099),new cljs.core.Keyword(null,"playing","playing",70013335));
@@ -105,16 +101,16 @@ case "playing":
 game.level_manager.update_STAR_.call(null,elapsed);
 
 var patient = new cljs.core.Keyword(null,"patient","patient",1178852672).cljs$core$IFn$_invoke$arity$1(cljs.core.deref.call(null,game.level_manager.context));
-var s_26234 = ["Score: ",cljs.core.str.cljs$core$IFn$_invoke$arity$1(new cljs.core.Keyword(null,"score","score",-1963588780).cljs$core$IFn$_invoke$arity$1(patient))].join('');
-if(cljs.core._EQ_.call(null,s_26234,game.core.score_text.text)){
+var s_26242 = ["Score: ",cljs.core.str.cljs$core$IFn$_invoke$arity$1(new cljs.core.Keyword(null,"score","score",-1963588780).cljs$core$IFn$_invoke$arity$1(patient))].join('');
+if(cljs.core._EQ_.call(null,s_26242,game.core.score_text.text)){
 } else {
-game.core.score_text.text = s_26234;
+game.core.score_text.text = s_26242;
 }
 
-var s_26235 = ["Lives Remaining: ",cljs.core.str.cljs$core$IFn$_invoke$arity$1(new cljs.core.Keyword(null,"lives-remaining","lives-remaining",-518036388).cljs$core$IFn$_invoke$arity$1(patient))].join('');
-if(cljs.core._EQ_.call(null,s_26235,game.core.lives_text.text)){
+var s_26243 = ["Lives Remaining: ",cljs.core.str.cljs$core$IFn$_invoke$arity$1(new cljs.core.Keyword(null,"lives-remaining","lives-remaining",-518036388).cljs$core$IFn$_invoke$arity$1(patient))].join('');
+if(cljs.core._EQ_.call(null,s_26243,game.core.lives_text.text)){
 } else {
-game.core.lives_text.text = s_26235;
+game.core.lives_text.text = s_26243;
 }
 
 if(cljs.core.truth_(new cljs.core.Keyword(null,"dead?","dead?",990391228).cljs$core$IFn$_invoke$arity$1(patient))){
@@ -210,7 +206,7 @@ game.core.root.addChild(game.core.lives_text);
 
 game.core.root.addChild(game.core.game_over_text);
 
-game.core.run.call(null,game.pixi.init.call(null,new cljs.core.PersistentVector(null, 5, 5, cljs.core.PersistentVector.EMPTY_NODE, ["textures/PlatformTiles.png","textures/Sprites/Patient/Idle.png","textures/Sprites/Patient/Die.png","textures/Sprites/Patient/Jump.png","textures/Sprites/Patient/Run.png"], null),(function (){
+game.core.run.call(null,game.pixi.init.call(null,new cljs.core.PersistentVector(null, 9, 5, cljs.core.PersistentVector.EMPTY_NODE, ["textures/PlatformTiles.png","textures/Sprites/Patient/Idle.png","textures/Sprites/Patient/Die.png","textures/Sprites/Patient/Jump.png","textures/Sprites/Patient/Run.png","textures/Sprites/Beldam/Idle.png","textures/Sprites/Beldam/Die.png","textures/Sprites/Beldam/Run.png","textures/Sprites/Nurse/Run.png"], null),(function (){
 return cljs.core.List.EMPTY;
 })),game.core.update_STAR_,game.core.root);
 

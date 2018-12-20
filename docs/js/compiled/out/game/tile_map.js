@@ -10,7 +10,8 @@ game.tile_map.tile_width = (48);
 game.tile_map.tile_height = (48);
 game.tile_map.map_width = (80);
 game.tile_map.map_height = (80);
-game.tile_map.tiles_per_row = (10);
+game.tile_map.tiles_per_row = (5);
+game.tile_map.tile_rows = (5);
 game.tile_map.sky_tile = (2);
 game.tile_map.context = cljs.core.atom.call(null,new cljs.core.PersistentArrayMap(null, 2, [new cljs.core.Keyword(null,"editor-mode?","editor-mode?",-1857893371),false,new cljs.core.Keyword(null,"map-cells","map-cells",-432327458),[]], null));
 game.tile_map.load_tiles = (function game$tile_map$load_tiles(){
@@ -19,7 +20,7 @@ return cljs.core.reduce.call(null,((function (bt){
 return (function (acc,i){
 return cljs.core.assoc.call(null,acc,i,(new PIXI.Texture(bt,(new PIXI.Rectangle((cljs.core.mod.call(null,i,game.tile_map.tiles_per_row) * game.tile_map.tile_width),(Math.floor((i / game.tile_map.tiles_per_row)) * game.tile_map.tile_height),game.tile_map.tile_width,game.tile_map.tile_height)),(new PIXI.Rectangle((cljs.core.mod.call(null,i,game.tile_map.tiles_per_row) * game.tile_map.tile_width),(Math.floor((i / game.tile_map.tiles_per_row)) * game.tile_map.tile_height),game.tile_map.tile_width,game.tile_map.tile_height)))));
 });})(bt))
-,cljs.core.PersistentArrayMap.EMPTY,cljs.core.range.call(null,(30)));
+,cljs.core.PersistentArrayMap.EMPTY,cljs.core.range.call(null,(game.tile_map.tiles_per_row * game.tile_map.tile_rows)));
 });
 game.tile_map.tile_textures = game.tile_map.load_tiles.call(null);
 game.tile_map.tile_rect = (function game$tile_map$tile_rect(x,y){

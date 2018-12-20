@@ -9,7 +9,8 @@
 (def tile-height 48)
 (def map-width 80)
 (def map-height 80)
-(def tiles-per-row 10)
+(def tiles-per-row 5)
+(def tile-rows 5)
 
 (def sky-tile 2)
 
@@ -31,7 +32,7 @@
                                         (* (Math/floor (/ i tiles-per-row)) tile-height)
                                         tile-width
                                         tile-height))))
-            {} (range 30))))
+            {} (range (* tiles-per-row tile-rows)))))
 
 (def tile-textures (load-tiles))
 

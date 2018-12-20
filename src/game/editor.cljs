@@ -84,12 +84,12 @@
 (defn fill-tiles []
   (let [tiles (.querySelector js/document "#tiles")]
     (loop [y 0]
-      (when (< y 3)
+      (when (< y tile-map/tile-rows)
         (loop [x 0]
-          (when (< x 10)
+          (when (< x tile-map/tiles-per-row)
             (let [tile      (.createElement js/document "div")
                   tile-text (.createElement js/document "div")
-                  index     (+ (* y 10) x)]
+                  index     (+ (* y tile-map/tiles-per-row) x)]
               (.. tile-text -classList (add "tile-text"))
               (set! (.-textContent tile-text) (cond
                                                 (and (= y 0) (= x 0)) "empty"

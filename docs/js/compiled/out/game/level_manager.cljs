@@ -6,6 +6,8 @@
             [game.record :as record]
             [game.practitioner :as practitioner]
             [game.game-object :as game-object]
+            [game.beldam :as beldam]
+            [game.nurse :as nurse]
             [game.world :as world]
             [game.animation-strip :as anim]
             [game.tile-map :as tile-map]))
@@ -27,6 +29,8 @@
                (tile-map/load-map s)
                (swap! context assoc :records [])
                (swap! context assoc :practitioners [])
+               (swap! context assoc :beldams [])
+               (swap! context assoc :nurses [])
                (dotimes [x tile-map/map-width]
                  (dotimes [y tile-map/map-height]
                    (let [code (tile-map/cell-code-value x y)]
@@ -37,6 +41,10 @@
                                     (assoc :world-location {:x (* x tile-map/tile-width)
                                                             :y (* y tile-map/tile-height)})
                                     (patient/play-animation "idle")))))
+                     #_(when (= code "BELDAM")
+                       (swap! context update :beldams conj (beldam/new-beldam x y)))
+                     (when (= code "NURSE")
+                       (swap! context update :nurses conj (nurse/new-nurse x y)))
                      #_(when (= code "REC")
                        (swap! context update :records conj (record/new-record x y)))
                      #_(when (= code "PRACT")
@@ -103,15 +111,69 @@
                   (update acc :practitioners conj practitioner))))
             {:patient patient :practitioners []} practitioners)))
 
+(defn update-spikes [patient spikes elapsed]
+  )
+
+(defn update-beldams [patient beldams elapsed]
+  (let [beldams (mapv (fn [beldam]
+                        (beldam/update* beldam elapsed))
+                      beldams)]
+    (reduce (fn [acc beldam]
+              (if (:dead? beldam)
+                (if (:enabled? beldam)
+                  (update acc :beldams conj beldam)
+                  (do
+                    (remove-object beldam)
+                    acc))
+                (if (u/rectangle-intersects?
+                     (game-object/collision-rectangle patient)
+                     (game-object/collision-rectangle beldam))
+                  (if (< (:y (game-object/world-center (:patient acc)))
+                         (-> beldam :world-location :y))
+                    (let [patient (-> (:patient acc)
+                                      (patient/jump)
+                                      (update :score + 5))
+                          beldam (-> beldam
+                                           (game-object/play-animation "die")
+                                           (assoc :dead? true
+                                                  :velocity {:x 0 :y 0}))]
+                      (-> acc
+                          (assoc :patient patient)
+                          (update :beldams conj beldam)))
+                    (-> acc
+                        (assoc :patient (patient/kill patient))
+                        (update :beldams conj beldam)))
+                  (update acc :beldams conj beldam))))
+            {:patient patient :beldams []} beldams)))
+
+(defn update-nurses [patient nurses elapsed]
+  (let [nurses (mapv (fn [nurse]
+                       (nurse/update* nurse elapsed))
+                     nurses)]
+    (reduce (fn [acc nurse]
+              (if (nurse/intersects nurse patient)
+                (-> acc
+                    (assoc :patient (patient/kill patient))
+                    (update :nurses conj nurse))
+                (update acc :nurses conj nurse)))
+            {:patient patient :nurses []} nurses)))
+
+(defn update-pills [patient pills elapsed]
+  )
+
 (defn update* [elapsed]
   (when-not (:loading? @context)
-    (let [{:keys [patient records practitioners]} @context
+    (let [{:keys [patient records practitioners beldams nurses]} @context
           patient (-> (patient/update* patient elapsed)
                      (check-current-cell-code))
-          {:keys [patient records]} (update-records patient records elapsed)
-          {:keys [patient practitioners]} (update-practitioners patient practitioners elapsed)]
+          {:keys [patient records]}       (update-records       patient records elapsed)
+          {:keys [patient practitioners]} (update-practitioners patient practitioners elapsed)
+          {:keys [patient beldams]}       (update-beldams       patient beldams elapsed)
+          {:keys [patient nurses]}       (update-nurses        patient nurses elapsed)]
       (swap! context assoc :patient patient)
       (swap! context assoc :records records)
+      (swap! context assoc :beldams beldams)
+      (swap! context assoc :nurses  nurses)
       (swap! context assoc :practitioners practitioners))))
 
 (defn reload-level []
