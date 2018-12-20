@@ -1,0 +1,1 @@
+{:main game.core, :asset-path "js/compiled/out", :output-to "resources/public/js/compiled/main.js", :source-map "resources/public/js/compiled/main.js.map", :output-dir "resources/public/js/compiled/out", :closure-warnings {:externs-validation :off}, :externs ["resources/public/js/pixi.min.js"], :optimizations :simple}

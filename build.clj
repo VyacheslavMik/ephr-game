@@ -9,13 +9,15 @@
   {:main          'game.core
    :asset-path    "js/compiled/out"
    :output-to     "resources/public/js/compiled/main.js"
-   ;; :source-map    "resources/public/js/compiled/main.js.map"
+   :source-map    "resources/public/js/compiled/main.js.map"
    :output-dir    "resources/public/js/compiled/out"
    :closure-warnings {:externs-validation :off}
-   ;; :optimizations :advanced
-   :optimizations :none
-   :optimize-constants true
-   :source-map    true})
+   :externs ["resources/public/js/pixi.min.js"]
+   :optimizations :simple
+   ;; :optimizations :none
+   ;; :optimize-constants true
+   ;; :source-map    true
+   })
 
 (def dev-config
   (merge compiler-config
