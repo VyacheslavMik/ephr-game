@@ -37,7 +37,7 @@
                :move-scale 180
                :teleport-delay 0
                :dead? false
-               :score 0
+               :docs-remaining 15
                :lives-remaining 3
                :frame-width 48
                :frame-height 120
@@ -79,7 +79,6 @@
     (if (controls/key-pressed? :KeyW)
       (let [bottom-cell (tile-map/get-cell-by-pixel (world-bottom patient))
             code (tile-map/cell-code-value bottom-cell)]
-        (println (:teleport-delay patient))
         (if (and code (str/starts-with? code "P"))
           (let [other-end (first
                            (filter

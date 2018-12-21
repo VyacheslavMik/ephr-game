@@ -123,7 +123,11 @@
       margin-left: 66px;
       }
 
-      .codeorpassable fieldset {
+      .bottom {
+      display: flex;
+      }
+
+      .bottom fieldset {
       display: flex;
       flex-direction: column;
       }
@@ -137,7 +141,12 @@
       }
 
       #map-numbers {
-      margin-top: 10px;
+      margin-top: 7px;
+      }
+
+      #tile-position {
+      margin-top: 7px;
+      margin-left: 5px;
       }
 
       .menu-entry {
@@ -215,7 +224,7 @@
       </div>
       <input type="range" min="0" max="1600" value="0" class="slider" id="bottom-range"
 	     oninput="game.editor.change_position(event)">
-      <div class="codeorpassable">
+      <div class="bottom">
 	<fieldset>
 	  <legend>Right Click Mode</legend>
 	  <div class="item">
@@ -231,8 +240,7 @@
 		   oninput="game.editor.custom_code(event)">
 	  </div>
 	  <select onchange="game.editor.change_code(event)" id="codes">
-	    <option value="ALGY">Allergy</option>
-	    <option value="PROC">Procedure</option>
+	    <option value="DOC">Document</option>
 	    <option value="PRACT">Practitioner</option>
 	    <option value="NURSE">Nurse</option>
 	    <option value="BELDAM">Beldam</option>
@@ -244,6 +252,7 @@
 	</fieldset>
 	<select onchange="game.editor.change_map_number(event)" id="map-numbers">
 	</select>
+	<div id="tile-position"><div>
       </div>
     </div>
     <script src="js/pixi.min.js" type="text/javascript"></script>

@@ -11,8 +11,8 @@ if((typeof game !== 'undefined') && (typeof game.pixi !== 'undefined') && (typeo
 game.pixi.loaded_resources = cljs.core.atom.call(null,cljs.core.PersistentHashSet.EMPTY);
 }
 game.pixi.init = (function game$pixi$init(var_args){
-var G__26225 = arguments.length;
-switch (G__26225) {
+var G__26231 = arguments.length;
+switch (G__26231) {
 case 0:
 return game.pixi.init.cljs$core$IFn$_invoke$arity$0();
 
@@ -73,8 +73,6 @@ game.pixi.loader.add(cljs.core.to_array.call(null,loading_resources));
 
 game.pixi.loader.load(((function (loading_resources){
 return (function (loader,resources__$1){
-cljs.core.println.call(null,resources__$1);
-
 return onload.call(null);
 });})(loading_resources))
 );

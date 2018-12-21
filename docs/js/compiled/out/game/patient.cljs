@@ -35,8 +35,9 @@
                :world-location {:x -500 :y -500}
                :fall-speed {:x 0 :y 20}
                :move-scale 180
+               :teleport-delay 0
                :dead? false
-               :score 0
+               :docs-remaining 15
                :lives-remaining 3
                :frame-width 48
                :frame-height 120
@@ -67,6 +68,31 @@
                      :velocity {:x 0 :y 0}))
             patient))
         patient))
+    patient))
+
+(defn world-bottom [patient]
+  {:x (+ (-> patient :world-location :x) (/ (:frame-width patient) 2))
+   :y (+ (-> patient :world-location :y) (:frame-height patient) -24)})
+
+(defn check-teleport [patient]
+  (if (> (:teleport-delay patient) 0.3)
+    (if (controls/key-pressed? :KeyW)
+      (let [bottom-cell (tile-map/get-cell-by-pixel (world-bottom patient))
+            code (tile-map/cell-code-value bottom-cell)]
+        (if (and code (str/starts-with? code "P"))
+          (let [other-end (first
+                           (filter
+                            #(not= bottom-cell %)
+                            (get (:teleports @(:context patient)) code)))]
+            (if other-end
+              (assoc patient
+                     :world-location {:x (* (:x other-end) tile-map/tile-width)
+                                      :y (- (* (inc (:y other-end)) tile-map/tile-height)
+                                            (:frame-height patient))}
+                     :teleport-delay 0)
+              (assoc patient :teleport-delay 0)))
+          patient))
+      patient)
     patient))
 
 (defn touch-right [patient]
@@ -141,17 +167,26 @@
           (assoc :flipped? flipped?
                  :velocity velocity)
           (check-level-transition)
+          (check-teleport)
           (play-animation new-animation)))))
 
 (defn jump [patient]
   (update-in patient [:velocity :y] - 500))
 
 (defn reposition-camera [patient]
-  (let [x (:x (camera/world-to-screen-v (:world-location patient)))]
-    (when (> x 500)
-      (camera/move {:x (- x 500) :y 0}))
-    (when (< x 200)
-      (camera/move {:x (- x 200) :y 0}))
+  (let [v (camera/world-to-screen-v (:world-location patient))
+        x (:x v)
+        y (:y v)
+        x (cond
+            (> x 500) (- x 500)
+            (< x 200) (- x 200)
+            :else     0)
+        y (cond
+            (> y 200) (- y 200)
+            (< y 200) (- y 200)
+            :else     0)]
+    (when (or (not= x 0) (not= y 0))
+      (camera/move {:x x :y y}))
     patient))
 
 (defn kill [patient]
@@ -165,6 +200,7 @@
 
 (defn update* [patient elapsed]
   (-> patient
+      (update :teleport-delay + elapsed)
       (not-dead-update elapsed)
       (update :velocity u/vector-add (:fall-speed patient))
       (reposition-camera)

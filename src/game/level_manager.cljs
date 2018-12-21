@@ -3,11 +3,12 @@
             [goog.string.format]
             [game.utils :as u]
             [game.patient :as patient]
-            [game.record :as record]
+            [game.doc :as doc]
             [game.practitioner :as practitioner]
             [game.game-object :as game-object]
             [game.beldam :as beldam]
             [game.spike :as spike]
+            [game.pill :as pill]
             [game.nurse :as nurse]
             [game.world :as world]
             [game.animation-strip :as anim]
@@ -29,10 +30,11 @@
                (swap! context assoc :loading? false)
                (world/clear)
                (tile-map/load-map s)
-               (swap! context assoc :records [])
+               (swap! context assoc :docs [])
                (swap! context assoc :practitioners [])
                (swap! context assoc :beldams [])
                (swap! context assoc :spikes [])
+               (swap! context assoc :pills [])
                (swap! context assoc :nurses [])
                (swap! context assoc :telepors {})
                (dotimes [x tile-map/map-width]
@@ -52,71 +54,67 @@
                        (swap! context update :beldams conj (beldam/new-beldam x y)))
                      (when (= code "NURSE")
                        (swap! context update :nurses conj (nurse/new-nurse x y)))
-                     #_(when (= code "REC")
-                       (swap! context update :records conj (record/new-record x y)))
-                     #_(when (= code "PRACT")
-                       (swap! context update :practitoners conj (practitioner/new-practitioner x y))))))
+                     (when (= code "DOC")
+                       (swap! context update :docs conj (doc/new-doc x y)))
+                     (when (= code "PRACT")
+                       (swap! context update :practitioners conj (practitioner/new-practitioner x y))))))
                (swap! context assoc :current-level level-number)
                (swap! context assoc :respawn-location (-> @context :patient :world-location))))))
 
 (defn init []
   (swap! context assoc :patient (patient/new-patient load-level context)))
 
-(defn check-current-cell-code [patient]
-  (if (:dead? patient)
-    patient
-    (let [code (tile-map/cell-code-value (tile-map/get-cell-by-pixel (:world-location patient)))]
-      (if (= code "DEAD")
-        (patient/kill patient)
-        patient))))
+(defn update-docs [patient docs elapsed]
+  (let [docs (mapv (fn [doc] (game-object/update* doc elapsed)) docs)
+        c (count docs)
+        docs (filterv (fn [doc]
+                        (let [alive? (not
+                                      (u/rectangle-intersects?
+                                       (game-object/collision-rectangle patient)
+                                       (game-object/collision-rectangle doc)))]
+                          (when-not alive?
+                            (remove-object doc))
+                          alive?))
+                      docs)
+        docs-found (- c (count docs))]
+    {:docs docs
+     :patient (update patient :docs-remaining - docs-found)}))
 
-(defn update-records [patient records elapsed]
-  (let [records (mapv (fn [record] (game-object/update* record elapsed)) records)
-        c (count records)
-        records (filterv (fn [record]
-                             (let [alive? (not
-                                           (u/rectangle-intersects?
-                                            (game-object/collision-rectangle patient)
-                                            (game-object/collision-rectangle record)))]
-                               (when-not alive?
-                                 (remove-object record))
-                               alive?))
-                           records)
-        score (- c (count records))]
-    {:records records
-     :patient (update patient :score +  (* score 10))}))
+(defn throw-pill [practitioner patient]
+  (when (> (:last-throw-time practitioner) 2)
+    (pill/new-pill (update (:world-location practitioner)
+                           :y + (rand-int (:frame-height practitioner)))
+                   {:x -1 :y 0})))
 
 (defn update-practitioners [patient practitioners elapsed]
   (let [practitioners (mapv (fn [practitioner]
-                        (practitioner/update* practitioner elapsed))
-                      practitioners)]
+                              (game-object/update* practitioner elapsed))
+                            practitioners)]
     (reduce (fn [acc practitioner]
-              (if (:dead? practitioner)
-                (if (:enabled? practitioner)
+              (let [practitioner (update practitioner :last-throw-time + elapsed)
+                    pill (throw-pill practitioner patient)
+                    practitioner (if pill (assoc practitioner :last-throw-time 0) practitioner)]
+                (if (:surrendered? practitioner)
                   (update acc :practitioners conj practitioner)
-                  (do
-                    (remove-object practitioner)
-                    acc))
-                (if (u/rectangle-intersects?
-                     (game-object/collision-rectangle patient)
-                     (game-object/collision-rectangle practitioner))
-                  (if (< (:y (game-object/world-center (:patient acc)))
-                         (-> practitioner :world-location :y))
-                    (let [patient (-> (:patient acc)
-                                     (patient/jump)
-                                     (update :score + 5))
-                          practitioner (-> practitioner
-                                    (game-object/play-animation "die")
-                                    (assoc :dead? true
-                                           :velocity {:x 0 :y 0}))]
+                  (if (u/rectangle-intersects?
+                       (game-object/collision-rectangle patient)
+                       (game-object/collision-rectangle practitioner))
+                    (if (< (:y (game-object/world-center (:patient acc)))
+                           (-> practitioner :world-location :y))
+                      (let [patient (update (:patient acc) :docs-remaining dec)
+                            practitioner (-> practitioner
+                                             (game-object/play-animation "surrender")
+                                             (assoc :surrendered? true))]
+                        (-> acc
+                            (assoc :patient patient)
+                            (update :practitioners conj practitioner)))
                       (-> acc
-                          (assoc :patient patient)
+                          (assoc :patient (patient/kill patient))
                           (update :practitioners conj practitioner)))
-                    (-> acc
-                        (assoc :patient (patient/kill patient))
-                        (update :practitioners conj practitioner)))
-                  (update acc :practitioners conj practitioner))))
-            {:patient patient :practitioners []} practitioners)))
+                    (cond-> acc
+                      true (update :practitioners conj practitioner)
+                      pill (update :new-pills conj pill))))))
+            {:patient patient :practitioners [] :new-pills []} practitioners)))
 
 (defn update-spikes [patient spikes elapsed]
   (let [spikes (mapv (fn [spike]
@@ -195,24 +193,41 @@
             {:patient patient :nurses []} nurses)))
 
 (defn update-pills [patient pills elapsed]
-  )
+  (let [pills (mapv (fn [pill]
+                      (pill/update* pill elapsed))
+                    pills)]
+    (reduce (fn [acc pill]
+              (if (:enabled? pill)
+                (if (and
+                     (not (:dead? patient))
+                     (u/rectangle-intersects? (game-object/collision-rectangle pill)
+                                              (game-object/collision-rectangle patient)))
+                  (do
+                    (remove-object pill)
+                    (assoc acc :patient (patient/kill patient)))
+                  (update acc :pills conj pill))
+                (do
+                  (remove-object pill)
+                  acc)))
+            {:patient patient :pills []} pills)))
 
 (defn update* [elapsed]
   (when-not (:loading? @context)
-    (let [{:keys [patient records practitioners beldams nurses spikes]} @context
-          patient (-> (patient/update* patient elapsed)
-                      (check-current-cell-code))
-          {:keys [patient records]}            (update-records       patient records elapsed)
-          {:keys [patient practitioners]}      (update-practitioners patient practitioners elapsed)
-          {:keys [patient spikes]}             (update-spikes        patient spikes elapsed)
-          {:keys [patient beldams new-spikes]} (update-beldams       patient beldams elapsed)
-          {:keys [patient nurses]}             (update-nurses        patient nurses elapsed)]
+    (let [{:keys [patient docs practitioners beldams nurses spikes pills]} @context
+          patient (patient/update* patient elapsed)
+          {:keys [patient docs]}                    (update-docs          patient docs elapsed)
+          {:keys [patient practitioners new-pills]} (update-practitioners patient practitioners elapsed)
+          {:keys [patient spikes]}                  (update-spikes        patient spikes elapsed)
+          {:keys [patient beldams new-spikes]}      (update-beldams       patient beldams elapsed)
+          {:keys [patient nurses]}                  (update-nurses        patient nurses elapsed)
+          {:keys [patient pills]}                   (update-pills         patient pills elapsed)]
       (swap! context assoc :patient patient)
-      (swap! context assoc :records records)
+      (swap! context assoc :docs    docs)
       (swap! context assoc :beldams beldams)
       (swap! context assoc :nurses  nurses)
+      (swap! context assoc :practitioners practitioners)
       (swap! context assoc :spikes  (into spikes new-spikes))
-      (swap! context assoc :practitioners practitioners))))
+      (swap! context assoc :pills   (into pills  new-pills)))))
 
 (defn reload-level []
   (let [save-respawn (:respawn-location @context)]

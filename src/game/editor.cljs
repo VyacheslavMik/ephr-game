@@ -137,6 +137,8 @@
         (set! (.-value map-number) (gstring/format "%03d" i))
         (.appendChild map-numbers map-number)))))
 
+(def tile-position (.querySelector js/document "#tile-position"))
+
 (defn update* [delta]
   (camera/set-position (:position @context))
   (let [ms (controls/get-mouse-state)]
@@ -144,6 +146,9 @@
                (> (:y ms) 0) (< (:y ms) (camera/view-port-height)))
       (let [mouse-loc (camera/screen-to-world-v ms)
             x (:x mouse-loc) y (:y mouse-loc)]
+        (set! (.. tile-position -textContent)
+              (str "x: " (tile-map/get-cell-by-pixel-x x)
+                   " y: " (tile-map/get-cell-by-pixel-y y)))
         (when (u/rectangle-contains (camera/world-rectangle) x y)
           (when (= (:button ms) :left)
             (tile-map/set-tile-at-cell (tile-map/get-cell-by-pixel-x x)

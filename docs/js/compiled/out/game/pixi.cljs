@@ -32,6 +32,5 @@
       (do
         (.. loader (add (to-array loading-resources)))
         (.. loader (load (fn [loader resources]
-                           (println resources)
                            (onload))))))
     (swap! loaded-resources clj-set/union (set resources))))

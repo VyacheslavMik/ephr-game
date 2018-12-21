@@ -15,7 +15,7 @@ return ["textures/Sprites/Patient/",cljs.core.str.cljs$core$IFn$_invoke$arity$1(
 game.patient.new_patient = (function game$patient$new_patient(load_level,context){
 var ob = game.game_object.new_game_object.call(null);
 var animations = new cljs.core.PersistentArrayMap(null, 4, ["idle",game.animation_strip.update_animation_strip.call(null,cljs.core.assoc.call(null,game.animation_strip.new_animation_strip.call(null,game.patient.texture_path.call(null,"Idle.png"),(48),"idle"),new cljs.core.Keyword(null,"loop-animation?","loop-animation?",2121213524),true)),"run",game.animation_strip.update_animation_strip.call(null,cljs.core.assoc.call(null,game.animation_strip.new_animation_strip.call(null,game.patient.texture_path.call(null,"Run.png"),(48),"run"),new cljs.core.Keyword(null,"loop-animation?","loop-animation?",2121213524),true)),"jump",game.animation_strip.update_animation_strip.call(null,cljs.core.assoc.call(null,game.animation_strip.new_animation_strip.call(null,game.patient.texture_path.call(null,"Jump.png"),(48),"jump"),new cljs.core.Keyword(null,"loop-animation?","loop-animation?",2121213524),false,new cljs.core.Keyword(null,"frame-delay","frame-delay",-1092400718),0.02,new cljs.core.Keyword(null,"next-animation","next-animation",133966088),"idle")),"die",game.animation_strip.update_animation_strip.call(null,cljs.core.assoc.call(null,game.animation_strip.new_animation_strip.call(null,game.patient.texture_path.call(null,"Die.png"),(48),"die"),new cljs.core.Keyword(null,"loop-animation?","loop-animation?",2121213524),false))], null);
-return cljs.core.assoc.call(null,ob,new cljs.core.Keyword(null,"animations","animations",140711296),animations,new cljs.core.Keyword(null,"world-location","world-location",-1928727782),new cljs.core.PersistentArrayMap(null, 2, [new cljs.core.Keyword(null,"x","x",2099068185),(-500),new cljs.core.Keyword(null,"y","y",-1757859776),(-500)], null),new cljs.core.Keyword(null,"fall-speed","fall-speed",-473862639),new cljs.core.PersistentArrayMap(null, 2, [new cljs.core.Keyword(null,"x","x",2099068185),(0),new cljs.core.Keyword(null,"y","y",-1757859776),(20)], null),new cljs.core.Keyword(null,"move-scale","move-scale",354888646),(180),new cljs.core.Keyword(null,"dead?","dead?",990391228),false,new cljs.core.Keyword(null,"score","score",-1963588780),(0),new cljs.core.Keyword(null,"lives-remaining","lives-remaining",-518036388),(3),new cljs.core.Keyword(null,"frame-width","frame-width",-1171477082),(48),new cljs.core.Keyword(null,"frame-height","frame-height",1932367973),(120),new cljs.core.Keyword(null,"collision-rectangle","collision-rectangle",-850175329),new cljs.core.PersistentArrayMap(null, 4, [new cljs.core.Keyword(null,"x","x",2099068185),(1),new cljs.core.Keyword(null,"y","y",-1757859776),(1),new cljs.core.Keyword(null,"width","width",-384071477),(48),new cljs.core.Keyword(null,"height","height",1025178622),(119)], null),new cljs.core.Keyword(null,"enabled?","enabled?",-1376075057),true,new cljs.core.Keyword(null,"load-level","load-level",868893349),load_level,new cljs.core.Keyword(null,"context","context",-830191113),context,new cljs.core.Keyword(null,"code-based-blocks?","code-based-blocks?",-1129736683),false);
+return cljs.core.assoc.call(null,ob,new cljs.core.Keyword(null,"animations","animations",140711296),animations,new cljs.core.Keyword(null,"world-location","world-location",-1928727782),new cljs.core.PersistentArrayMap(null, 2, [new cljs.core.Keyword(null,"x","x",2099068185),(-500),new cljs.core.Keyword(null,"y","y",-1757859776),(-500)], null),new cljs.core.Keyword(null,"fall-speed","fall-speed",-473862639),new cljs.core.PersistentArrayMap(null, 2, [new cljs.core.Keyword(null,"x","x",2099068185),(0),new cljs.core.Keyword(null,"y","y",-1757859776),(20)], null),new cljs.core.Keyword(null,"move-scale","move-scale",354888646),(180),new cljs.core.Keyword(null,"teleport-delay","teleport-delay",2075326903),(0),new cljs.core.Keyword(null,"dead?","dead?",990391228),false,new cljs.core.Keyword(null,"docs-remaining","docs-remaining",-1208169811),(15),new cljs.core.Keyword(null,"lives-remaining","lives-remaining",-518036388),(3),new cljs.core.Keyword(null,"frame-width","frame-width",-1171477082),(48),new cljs.core.Keyword(null,"frame-height","frame-height",1932367973),(120),new cljs.core.Keyword(null,"collision-rectangle","collision-rectangle",-850175329),new cljs.core.PersistentArrayMap(null, 4, [new cljs.core.Keyword(null,"x","x",2099068185),(1),new cljs.core.Keyword(null,"y","y",-1757859776),(1),new cljs.core.Keyword(null,"width","width",-384071477),(48),new cljs.core.Keyword(null,"height","height",1025178622),(119)], null),new cljs.core.Keyword(null,"enabled?","enabled?",-1376075057),true,new cljs.core.Keyword(null,"load-level","load-level",868893349),load_level,new cljs.core.Keyword(null,"context","context",-830191113),context,new cljs.core.Keyword(null,"code-based-blocks?","code-based-blocks?",-1129736683),false);
 });
 game.patient.play_animation = (function game$patient$play_animation(patient,animation){
 if(cljs.core._EQ_.call(null,new cljs.core.Keyword(null,"current-animation","current-animation",90875932).cljs$core$IFn$_invoke$arity$1(patient),animation)){
@@ -43,6 +43,41 @@ new cljs.core.Keyword(null,"load-level","load-level",868893349).cljs$core$IFn$_i
 cljs.core.swap_BANG_.call(null,new cljs.core.Keyword(null,"context","context",-830191113).cljs$core$IFn$_invoke$arity$1(patient),cljs.core.assoc,new cljs.core.Keyword(null,"respawn-location","respawn-location",541992207),loc);
 
 return cljs.core.assoc.call(null,patient,new cljs.core.Keyword(null,"world-location","world-location",-1928727782),loc,new cljs.core.Keyword(null,"velocity","velocity",-581524355),new cljs.core.PersistentArrayMap(null, 2, [new cljs.core.Keyword(null,"x","x",2099068185),(0),new cljs.core.Keyword(null,"y","y",-1757859776),(0)], null));
+} else {
+return patient;
+}
+} else {
+return patient;
+}
+} else {
+return patient;
+}
+});
+game.patient.world_bottom = (function game$patient$world_bottom(patient){
+return new cljs.core.PersistentArrayMap(null, 2, [new cljs.core.Keyword(null,"x","x",2099068185),(new cljs.core.Keyword(null,"x","x",2099068185).cljs$core$IFn$_invoke$arity$1(new cljs.core.Keyword(null,"world-location","world-location",-1928727782).cljs$core$IFn$_invoke$arity$1(patient)) + (new cljs.core.Keyword(null,"frame-width","frame-width",-1171477082).cljs$core$IFn$_invoke$arity$1(patient) / (2))),new cljs.core.Keyword(null,"y","y",-1757859776),((new cljs.core.Keyword(null,"y","y",-1757859776).cljs$core$IFn$_invoke$arity$1(new cljs.core.Keyword(null,"world-location","world-location",-1928727782).cljs$core$IFn$_invoke$arity$1(patient)) + new cljs.core.Keyword(null,"frame-height","frame-height",1932367973).cljs$core$IFn$_invoke$arity$1(patient)) + (-24))], null);
+});
+game.patient.check_teleport = (function game$patient$check_teleport(patient){
+if((new cljs.core.Keyword(null,"teleport-delay","teleport-delay",2075326903).cljs$core$IFn$_invoke$arity$1(patient) > 0.3)){
+if(cljs.core.truth_(game.controls.key_pressed_QMARK_.call(null,new cljs.core.Keyword(null,"KeyW","KeyW",-1083909461)))){
+var bottom_cell = game.tile_map.get_cell_by_pixel.call(null,game.patient.world_bottom.call(null,patient));
+var code = game.tile_map.cell_code_value.call(null,bottom_cell);
+if(cljs.core.truth_((function (){var and__4036__auto__ = code;
+if(cljs.core.truth_(and__4036__auto__)){
+return clojure.string.starts_with_QMARK_.call(null,code,"P");
+} else {
+return and__4036__auto__;
+}
+})())){
+var other_end = cljs.core.first.call(null,cljs.core.filter.call(null,((function (bottom_cell,code){
+return (function (p1__26056_SHARP_){
+return cljs.core.not_EQ_.call(null,bottom_cell,p1__26056_SHARP_);
+});})(bottom_cell,code))
+,cljs.core.get.call(null,new cljs.core.Keyword(null,"teleports","teleports",1782328857).cljs$core$IFn$_invoke$arity$1(cljs.core.deref.call(null,new cljs.core.Keyword(null,"context","context",-830191113).cljs$core$IFn$_invoke$arity$1(patient))),code)));
+if(cljs.core.truth_(other_end)){
+return cljs.core.assoc.call(null,patient,new cljs.core.Keyword(null,"world-location","world-location",-1928727782),new cljs.core.PersistentArrayMap(null, 2, [new cljs.core.Keyword(null,"x","x",2099068185),(new cljs.core.Keyword(null,"x","x",2099068185).cljs$core$IFn$_invoke$arity$1(other_end) * game.tile_map.tile_width),new cljs.core.Keyword(null,"y","y",-1757859776),(((new cljs.core.Keyword(null,"y","y",-1757859776).cljs$core$IFn$_invoke$arity$1(other_end) + (1)) * game.tile_map.tile_height) - new cljs.core.Keyword(null,"frame-height","frame-height",1932367973).cljs$core$IFn$_invoke$arity$1(patient))], null),new cljs.core.Keyword(null,"teleport-delay","teleport-delay",2075326903),(0));
+} else {
+return cljs.core.assoc.call(null,patient,new cljs.core.Keyword(null,"teleport-delay","teleport-delay",2075326903),(0));
+}
 } else {
 return patient;
 }
@@ -153,21 +188,22 @@ return and__4036__auto__;
 }
 })())?"jump":new_animation);
 var new_animation__$2 = ((cljs.core._EQ_.call(null,new cljs.core.Keyword(null,"current-animation","current-animation",90875932).cljs$core$IFn$_invoke$arity$1(patient),"jump"))?"jump":new_animation__$1);
-return game.patient.play_animation.call(null,game.patient.check_level_transition.call(null,cljs.core.assoc.call(null,patient,new cljs.core.Keyword(null,"flipped?","flipped?",-1554284978),flipped_QMARK_,new cljs.core.Keyword(null,"velocity","velocity",-581524355),velocity__$1)),new_animation__$2);
+return game.patient.play_animation.call(null,game.patient.check_teleport.call(null,game.patient.check_level_transition.call(null,cljs.core.assoc.call(null,patient,new cljs.core.Keyword(null,"flipped?","flipped?",-1554284978),flipped_QMARK_,new cljs.core.Keyword(null,"velocity","velocity",-581524355),velocity__$1))),new_animation__$2);
 }
 });
 game.patient.jump = (function game$patient$jump(patient){
 return cljs.core.update_in.call(null,patient,new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"velocity","velocity",-581524355),new cljs.core.Keyword(null,"y","y",-1757859776)], null),cljs.core._,(500));
 });
 game.patient.reposition_camera = (function game$patient$reposition_camera(patient){
-var x = new cljs.core.Keyword(null,"x","x",2099068185).cljs$core$IFn$_invoke$arity$1(game.camera.world_to_screen_v.call(null,new cljs.core.Keyword(null,"world-location","world-location",-1928727782).cljs$core$IFn$_invoke$arity$1(patient)));
-if((x > (500))){
-game.camera.move.call(null,new cljs.core.PersistentArrayMap(null, 2, [new cljs.core.Keyword(null,"x","x",2099068185),(x - (500)),new cljs.core.Keyword(null,"y","y",-1757859776),(0)], null));
-} else {
-}
-
-if((x < (200))){
-game.camera.move.call(null,new cljs.core.PersistentArrayMap(null, 2, [new cljs.core.Keyword(null,"x","x",2099068185),(x - (200)),new cljs.core.Keyword(null,"y","y",-1757859776),(0)], null));
+var v = game.camera.world_to_screen_v.call(null,new cljs.core.Keyword(null,"world-location","world-location",-1928727782).cljs$core$IFn$_invoke$arity$1(patient));
+var x = new cljs.core.Keyword(null,"x","x",2099068185).cljs$core$IFn$_invoke$arity$1(v);
+var y = new cljs.core.Keyword(null,"y","y",-1757859776).cljs$core$IFn$_invoke$arity$1(v);
+var x__$1 = (((x > (500)))?(x - (500)):(((x < (200)))?(x - (200)):(0)
+));
+var y__$1 = (((y > (200)))?(y - (200)):(((y < (200)))?(y - (200)):(0)
+));
+if(((cljs.core.not_EQ_.call(null,x__$1,(0))) || (cljs.core.not_EQ_.call(null,y__$1,(0))))){
+game.camera.move.call(null,new cljs.core.PersistentArrayMap(null, 2, [new cljs.core.Keyword(null,"x","x",2099068185),x__$1,new cljs.core.Keyword(null,"y","y",-1757859776),y__$1], null));
 } else {
 }
 
@@ -181,7 +217,7 @@ return cljs.core.assoc.call(null,cljs.core.assoc_in.call(null,cljs.core.update.c
 }
 });
 game.patient.update_STAR_ = (function game$patient$update_STAR_(patient,elapsed){
-return game.game_object.update_STAR_.call(null,game.patient.reposition_camera.call(null,cljs.core.update.call(null,game.patient.not_dead_update.call(null,patient,elapsed),new cljs.core.Keyword(null,"velocity","velocity",-581524355),game.utils.vector_add,new cljs.core.Keyword(null,"fall-speed","fall-speed",-473862639).cljs$core$IFn$_invoke$arity$1(patient))),elapsed);
+return game.game_object.update_STAR_.call(null,game.patient.reposition_camera.call(null,cljs.core.update.call(null,game.patient.not_dead_update.call(null,cljs.core.update.call(null,patient,new cljs.core.Keyword(null,"teleport-delay","teleport-delay",2075326903),cljs.core._PLUS_,elapsed),elapsed),new cljs.core.Keyword(null,"velocity","velocity",-581524355),game.utils.vector_add,new cljs.core.Keyword(null,"fall-speed","fall-speed",-473862639).cljs$core$IFn$_invoke$arity$1(patient))),elapsed);
 });
 game.patient.revive = (function game$patient$revive(patient){
 return cljs.core.assoc.call(null,game.game_object.play_animation.call(null,patient,"idle"),new cljs.core.Keyword(null,"dead?","dead?",990391228),false,new cljs.core.Keyword(null,"world-location","world-location",-1928727782),new cljs.core.PersistentArrayMap(null, 2, [new cljs.core.Keyword(null,"x","x",2099068185),(-500),new cljs.core.Keyword(null,"y","y",-1757859776),(-500)], null));

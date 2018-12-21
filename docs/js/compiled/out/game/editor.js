@@ -82,14 +82,14 @@ return document.body.removeChild(element);
 });
 goog.exportSymbol('game.editor.save_map', game.editor.save_map);
 game.editor.load_map = (function game$editor$load_map(ev){
-var fr_26229 = (new FileReader());
-(fr_26229["onload"] = ((function (fr_26229){
+var fr_26235 = (new FileReader());
+(fr_26235["onload"] = ((function (fr_26235){
 return (function (e){
 return game.tile_map.load_map.call(null,e.target.result);
-});})(fr_26229))
+});})(fr_26235))
 );
 
-fr_26229.readAsText((ev.target.files[(0)]));
+fr_26235.readAsText((ev.target.files[(0)]));
 
 return ev.target.value = "";
 });
@@ -117,43 +117,43 @@ tiles.innerHTML = "";
 var y = (0);
 while(true){
 if((y < cljs.core.deref.call(null,game.tile_map.tile_rows))){
-var x_26230 = (0);
+var x_26236 = (0);
 while(true){
-if((x_26230 < cljs.core.deref.call(null,game.tile_map.tiles_per_row))){
-var tile_26231 = document.createElement("div");
-var tile_text_26232 = document.createElement("div");
-var index_26233 = ((y * cljs.core.deref.call(null,game.tile_map.tiles_per_row)) + x_26230);
-tile_text_26232.classList.add("tile-text");
+if((x_26236 < cljs.core.deref.call(null,game.tile_map.tiles_per_row))){
+var tile_26237 = document.createElement("div");
+var tile_text_26238 = document.createElement("div");
+var index_26239 = ((y * cljs.core.deref.call(null,game.tile_map.tiles_per_row)) + x_26236);
+tile_text_26238.classList.add("tile-text");
 
-tile_text_26232.textContent = ((((cljs.core._EQ_.call(null,y,(0))) && (cljs.core._EQ_.call(null,x_26230,(0)))))?"empty":((((cljs.core._EQ_.call(null,y,(0))) && (cljs.core._EQ_.call(null,x_26230,(1)))))?"white":""
+tile_text_26238.textContent = ((((cljs.core._EQ_.call(null,y,(0))) && (cljs.core._EQ_.call(null,x_26236,(0)))))?"empty":((((cljs.core._EQ_.call(null,y,(0))) && (cljs.core._EQ_.call(null,x_26236,(1)))))?"white":""
 ));
 
-tiles.appendChild(tile_text_26232);
+tiles.appendChild(tile_text_26238);
 
-tile_26231.classList.add("tile");
+tile_26237.classList.add("tile");
 
-tile_26231.tabIndex = index_26233;
+tile_26237.tabIndex = index_26239;
 
-tile_26231.onclick = ((function (x_26230,y,tile_26231,tile_text_26232,index_26233,tiles){
+tile_26237.onclick = ((function (x_26236,y,tile_26237,tile_text_26238,index_26239,tiles){
 return (function (ev){
-return cljs.core.swap_BANG_.call(null,game.editor.context,cljs.core.assoc,new cljs.core.Keyword(null,"tile-index","tile-index",-1401655679),index_26233);
-});})(x_26230,y,tile_26231,tile_text_26232,index_26233,tiles))
+return cljs.core.swap_BANG_.call(null,game.editor.context,cljs.core.assoc,new cljs.core.Keyword(null,"tile-index","tile-index",-1401655679),index_26239);
+});})(x_26236,y,tile_26237,tile_text_26238,index_26239,tiles))
 ;
 
-tile_26231.style.background = [cljs.core.str.cljs$core$IFn$_invoke$arity$1(game.editor.tile_url.call(null,path))," ",cljs.core.str.cljs$core$IFn$_invoke$arity$1((- (x_26230 * game.tile_map.tile_width))),"px"," ",cljs.core.str.cljs$core$IFn$_invoke$arity$1((- (y * game.tile_map.tile_height))),"px"].join('');
+tile_26237.style.background = [cljs.core.str.cljs$core$IFn$_invoke$arity$1(game.editor.tile_url.call(null,path))," ",cljs.core.str.cljs$core$IFn$_invoke$arity$1((- (x_26236 * game.tile_map.tile_width))),"px"," ",cljs.core.str.cljs$core$IFn$_invoke$arity$1((- (y * game.tile_map.tile_height))),"px"].join('');
 
-tiles.appendChild(tile_26231);
+tiles.appendChild(tile_26237);
 
-var G__26234 = (x_26230 + (1));
-x_26230 = G__26234;
+var G__26240 = (x_26236 + (1));
+x_26236 = G__26240;
 continue;
 } else {
 }
 break;
 }
 
-var G__26235 = (y + (1));
-y = G__26235;
+var G__26241 = (y + (1));
+y = G__26241;
 continue;
 } else {
 return null;
@@ -162,26 +162,26 @@ break;
 }
 });
 game.editor.load_tiles = (function game$editor$load_tiles(ev){
-var fr_26236 = (new FileReader());
-var file_26237 = (ev["target"]["files"][(0)]);
-(fr_26236["onload"] = ((function (fr_26236,file_26237){
+var fr_26242 = (new FileReader());
+var file_26243 = (ev["target"]["files"][(0)]);
+(fr_26242["onload"] = ((function (fr_26242,file_26243){
 return (function (e){
 var img = (new Image());
-img.onload = ((function (img,fr_26236,file_26237){
+img.onload = ((function (img,fr_26242,file_26243){
 return (function (_){
 game.tile_map.load_tiles.call(null,img);
 
 game.tile_map.initialize.call(null,true);
 
 return game.editor.fill_tiles.call(null,e.target.result);
-});})(img,fr_26236,file_26237))
+});})(img,fr_26242,file_26243))
 ;
 
 return img.src = e.target.result;
-});})(fr_26236,file_26237))
+});})(fr_26242,file_26243))
 );
 
-fr_26236.readAsDataURL(file_26237);
+fr_26242.readAsDataURL(file_26243);
 
 return ev.target.value = "";
 });
@@ -192,20 +192,20 @@ var n__4518__auto__ = (100);
 var i = (0);
 while(true){
 if((i < n__4518__auto__)){
-var map_number_26238 = document.createElement("option");
+var map_number_26244 = document.createElement("option");
 if(cljs.core._EQ_.call(null,i,(0))){
-map_number_26238.setAttribute("checked",true);
+map_number_26244.setAttribute("checked",true);
 } else {
 }
 
-map_number_26238.textContent = goog.string.format("%03d",i);
+map_number_26244.textContent = goog.string.format("%03d",i);
 
-map_number_26238.value = goog.string.format("%03d",i);
+map_number_26244.value = goog.string.format("%03d",i);
 
-map_numbers.appendChild(map_number_26238);
+map_numbers.appendChild(map_number_26244);
 
-var G__26239 = (i + (1));
-i = G__26239;
+var G__26245 = (i + (1));
+i = G__26245;
 continue;
 } else {
 return null;
@@ -213,25 +213,28 @@ return null;
 break;
 }
 });
+game.editor.tile_position = document.querySelector("#tile-position");
 game.editor.update_STAR_ = (function game$editor$update_STAR_(delta){
 game.camera.set_position.call(null,new cljs.core.Keyword(null,"position","position",-2011731912).cljs$core$IFn$_invoke$arity$1(cljs.core.deref.call(null,game.editor.context)));
 
 var ms = game.controls.get_mouse_state.call(null);
 if((((new cljs.core.Keyword(null,"x","x",2099068185).cljs$core$IFn$_invoke$arity$1(ms) > (0))) && ((new cljs.core.Keyword(null,"x","x",2099068185).cljs$core$IFn$_invoke$arity$1(ms) < game.camera.view_port_width.call(null))) && ((new cljs.core.Keyword(null,"y","y",-1757859776).cljs$core$IFn$_invoke$arity$1(ms) > (0))) && ((new cljs.core.Keyword(null,"y","y",-1757859776).cljs$core$IFn$_invoke$arity$1(ms) < game.camera.view_port_height.call(null))))){
-var mouse_loc_26240 = game.camera.screen_to_world_v.call(null,ms);
-var x_26241 = new cljs.core.Keyword(null,"x","x",2099068185).cljs$core$IFn$_invoke$arity$1(mouse_loc_26240);
-var y_26242 = new cljs.core.Keyword(null,"y","y",-1757859776).cljs$core$IFn$_invoke$arity$1(mouse_loc_26240);
-if(game.utils.rectangle_contains.call(null,game.camera.world_rectangle.call(null),x_26241,y_26242)){
+var mouse_loc_26246 = game.camera.screen_to_world_v.call(null,ms);
+var x_26247 = new cljs.core.Keyword(null,"x","x",2099068185).cljs$core$IFn$_invoke$arity$1(mouse_loc_26246);
+var y_26248 = new cljs.core.Keyword(null,"y","y",-1757859776).cljs$core$IFn$_invoke$arity$1(mouse_loc_26246);
+game.editor.tile_position.textContent = ["x: ",cljs.core.str.cljs$core$IFn$_invoke$arity$1(game.tile_map.get_cell_by_pixel_x.call(null,x_26247))," y: ",cljs.core.str.cljs$core$IFn$_invoke$arity$1(game.tile_map.get_cell_by_pixel_y.call(null,y_26248))].join('');
+
+if(game.utils.rectangle_contains.call(null,game.camera.world_rectangle.call(null),x_26247,y_26248)){
 if(cljs.core._EQ_.call(null,new cljs.core.Keyword(null,"button","button",1456579943).cljs$core$IFn$_invoke$arity$1(ms),new cljs.core.Keyword(null,"left","left",-399115937))){
-game.tile_map.set_tile_at_cell.call(null,game.tile_map.get_cell_by_pixel_x.call(null,x_26241),game.tile_map.get_cell_by_pixel_y.call(null,y_26242),new cljs.core.Keyword(null,"layer","layer",-1601820589).cljs$core$IFn$_invoke$arity$1(cljs.core.deref.call(null,game.editor.context)),new cljs.core.Keyword(null,"tile-index","tile-index",-1401655679).cljs$core$IFn$_invoke$arity$1(cljs.core.deref.call(null,game.editor.context)));
+game.tile_map.set_tile_at_cell.call(null,game.tile_map.get_cell_by_pixel_x.call(null,x_26247),game.tile_map.get_cell_by_pixel_y.call(null,y_26248),new cljs.core.Keyword(null,"layer","layer",-1601820589).cljs$core$IFn$_invoke$arity$1(cljs.core.deref.call(null,game.editor.context)),new cljs.core.Keyword(null,"tile-index","tile-index",-1401655679).cljs$core$IFn$_invoke$arity$1(cljs.core.deref.call(null,game.editor.context)));
 } else {
 }
 
 if(((cljs.core.not_EQ_.call(null,new cljs.core.Keyword(null,"button","button",1456579943).cljs$core$IFn$_invoke$arity$1(new cljs.core.Keyword(null,"last-mouse-state","last-mouse-state",-367054181).cljs$core$IFn$_invoke$arity$1(cljs.core.deref.call(null,game.editor.context))),new cljs.core.Keyword(null,"right","right",-452581833))) && (cljs.core._EQ_.call(null,new cljs.core.Keyword(null,"button","button",1456579943).cljs$core$IFn$_invoke$arity$1(ms),new cljs.core.Keyword(null,"right","right",-452581833))))){
 if(cljs.core._EQ_.call(null,new cljs.core.Keyword(null,"mode","mode",654403691).cljs$core$IFn$_invoke$arity$1(cljs.core.deref.call(null,game.editor.context)),new cljs.core.Keyword(null,"toggle-passable","toggle-passable",-795091825))){
-game.tile_map.toggle_passable.call(null,game.tile_map.get_cell_by_pixel_x.call(null,x_26241),game.tile_map.get_cell_by_pixel_y.call(null,y_26242));
+game.tile_map.toggle_passable.call(null,game.tile_map.get_cell_by_pixel_x.call(null,x_26247),game.tile_map.get_cell_by_pixel_y.call(null,y_26248));
 } else {
-game.tile_map.set_code.call(null,game.tile_map.get_cell_by_pixel_x.call(null,x_26241),game.tile_map.get_cell_by_pixel_y.call(null,y_26242),new cljs.core.Keyword(null,"code-value","code-value",-1147505513).cljs$core$IFn$_invoke$arity$1(cljs.core.deref.call(null,game.editor.context)));
+game.tile_map.set_code.call(null,game.tile_map.get_cell_by_pixel_x.call(null,x_26247),game.tile_map.get_cell_by_pixel_y.call(null,y_26248),new cljs.core.Keyword(null,"code-value","code-value",-1147505513).cljs$core$IFn$_invoke$arity$1(cljs.core.deref.call(null,game.editor.context)));
 }
 } else {
 }

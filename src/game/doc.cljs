@@ -1,12 +1,12 @@
-(ns game.record
+(ns game.doc
   (:require [game.tile-map :as tile-map]
             [game.animation-strip :as anim]
             [game.game-object :as game-object]))
 
 (defn texture-path []
-  "textures/")
+  "textures/Doc.png")
 
-(defn new-record [cell-x cell-y]
+(defn new-doc [cell-x cell-y]
   (let [ob (game-object/new-game-object)
         animations {"idle" (-> (anim/new-animation-strip (texture-path) 48 "idle")
                                (assoc :loop-animation? true
@@ -15,10 +15,9 @@
     (-> ob
         (assoc :animations animations
                :world-location {:x (* cell-x tile-map/tile-width)
-                                :y (* cell-y tile-map/tile-height)}
-               :frame-width  tile-map/tile-width
-               :frame-height tile-map/tile-height
-               :collision-rectangle {:x 9 :y 24 :width 30 :height 24}
-               :draw-depth 6
+                                :y (- (* (inc cell-y) tile-map/tile-height) 4)}
+               :frame-width 48
+               :frame-height 4
+               :collision-rectangle {:x 0 :y 0 :width 48 :height 48}
                :enabled? true)
         (game-object/play-animation "idle"))))
