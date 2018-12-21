@@ -13,22 +13,36 @@
 
 (defn new-patient [load-level context]
   (let [ob (game-object/new-game-object)
-        animations {"idle" (-> (anim/new-animation-strip (texture-path "Idle.png") 48 "idle")
+        animations {"idle" (-> (anim/new-animation-strip (texture-path "Idle.png") 131 "idle"
+                                                         {:x 41
+                                                          :y 35
+                                                          :width 51
+                                                          :height 105})
                                (assoc :loop-animation? true)
                                (anim/update-animation-strip))
-                    "run" (-> (anim/new-animation-strip (texture-path "Run.png") 48 "run")
-                              (assoc :loop-animation? true)
+                    "run" (-> (anim/new-animation-strip (texture-path "Run.png") 131 "run"
+                                                        {:x 41
+                                                         :y 35
+                                                         :width 51
+                                                         :height 105})
+                              (assoc :loop-animation? true
+                                     :frame-delay 0.5)
                               (anim/update-animation-strip))
-                    "jump" (-> (anim/new-animation-strip (texture-path "Jump.png") 48 "jump")
+                    "jump" (-> (anim/new-animation-strip (texture-path "Jump.png") 131 "jump"
+                                                         {:x 30
+                                                          :y 33
+                                                          :width 70
+                                                          :height 105})
                                (assoc :loop-animation? false
-                                      :frame-delay 0.02
-                                      :next-animation "idle")
-                               #_(assoc :loop-animation? false
-                                      :frame-delay 0.2
+                                      :frame-delay 0.13
                                       :next-animation "idle")
                                (anim/update-animation-strip))
-                    "die" (-> (anim/new-animation-strip (texture-path "Die.png") 48 "die")
-                              (assoc :loop-animation? false)
+                    "die" (-> (anim/new-animation-strip (texture-path "Die.png") 131 "die"
+                                                        {:x 49
+                                                         :y 40
+                                                         :width 80
+                                                         :height 100})
+                              (assoc :loop-animation? true)
                               (anim/update-animation-strip))}]
     (-> ob
         (assoc :animations animations
@@ -37,12 +51,13 @@
                :move-scale 180
                :teleport-delay 0
                :dead? false
-               :docs-remaining 15
+               :docs-remaining 7
                :lives-remaining 3
-               :frame-width 48
-               :frame-height 120
-               :collision-rectangle {:x 1 :y 1 :width 48 :height 119}
+               :frame-width 51
+               :frame-height 99
+               :collision-rectangle {:x 0 :y 0 :width 51 :height 99}
                :enabled? true
+               :flipped? true
                :load-level load-level
                :context context
                :code-based-blocks? false))))
@@ -87,8 +102,7 @@
             (if other-end
               (assoc patient
                      :world-location {:x (* (:x other-end) tile-map/tile-width)
-                                      :y (- (* (inc (:y other-end)) tile-map/tile-height)
-                                            (:frame-height patient))}
+                                      :y (- (* (:y other-end) tile-map/tile-height) 51)}
                      :teleport-delay 0)
               (assoc patient :teleport-delay 0)))
           patient))

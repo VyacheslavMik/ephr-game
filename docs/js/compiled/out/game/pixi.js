@@ -11,8 +11,8 @@ if((typeof game !== 'undefined') && (typeof game.pixi !== 'undefined') && (typeo
 game.pixi.loaded_resources = cljs.core.atom.call(null,cljs.core.PersistentHashSet.EMPTY);
 }
 game.pixi.init = (function game$pixi$init(var_args){
-var G__26231 = arguments.length;
-switch (G__26231) {
+var G__26248 = arguments.length;
+switch (G__26248) {
 case 0:
 return game.pixi.init.cljs$core$IFn$_invoke$arity$0();
 

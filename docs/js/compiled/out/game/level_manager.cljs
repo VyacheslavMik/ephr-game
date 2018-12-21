@@ -45,8 +45,7 @@
                               (fn [patient]
                                 (-> patient
                                     (assoc :world-location {:x (* x tile-map/tile-width)
-                                                            :y (- (* (inc y) tile-map/tile-height)
-                                                                  (:frame-height patient))})
+                                                            :y (- (* y tile-map/tile-height) 51)})
                                     (patient/play-animation "idle")))))
                      (when (and code (str/starts-with? code "P"))
                        (swap! context update-in [:teleports code] conj {:x x :y y}))
@@ -83,8 +82,28 @@
 (defn throw-pill [practitioner patient]
   (when (> (:last-throw-time practitioner) 2)
     (pill/new-pill (update (:world-location practitioner)
-                           :y + (rand-int (:frame-height practitioner)))
+                           :y + (rand-int (- (:frame-height practitioner) 40)))
                    {:x -1 :y 0})))
+
+(defn practitioner-attack [practitioner]
+  (if (and (> (:last-throw-time practitioner) 1.5)
+           (< (:last-throw-time practitioner) 1.7)
+           (not (:surrendered? practitioner)))
+    (game-object/play-animation practitioner "attack")
+    practitioner))
+
+(defn check-current-cell-code [patient]
+  patient
+  #_(if (:dead? patient)
+    patient
+    (let [code (tile-map/cell-code-value (tile-map/get-cell-by-pixel
+                                          (-> (:world-location patient)
+                                              (update :y + 20)
+                                              (update :x + 20))))]
+      
+      (if (= code "DEAD")
+        (patient/kill patient)
+        patient))))
 
 (defn update-practitioners [patient practitioners elapsed]
   (let [practitioners (mapv (fn [practitioner]
@@ -92,6 +111,7 @@
                             practitioners)]
     (reduce (fn [acc practitioner]
               (let [practitioner (update practitioner :last-throw-time + elapsed)
+                    practitioner (practitioner-attack practitioner)
                     pill (throw-pill practitioner patient)
                     practitioner (if pill (assoc practitioner :last-throw-time 0) practitioner)]
                 (if (:surrendered? practitioner)
@@ -103,7 +123,7 @@
                            (-> practitioner :world-location :y))
                       (let [patient (update (:patient acc) :docs-remaining dec)
                             practitioner (-> practitioner
-                                             (game-object/play-animation "surrender")
+                                             (game-object/play-animation "idle")
                                              (assoc :surrendered? true))]
                         (-> acc
                             (assoc :patient patient)
@@ -214,7 +234,8 @@
 (defn update* [elapsed]
   (when-not (:loading? @context)
     (let [{:keys [patient docs practitioners beldams nurses spikes pills]} @context
-          patient (patient/update* patient elapsed)
+          patient (-> (patient/update* patient elapsed)
+                      (check-current-cell-code))
           {:keys [patient docs]}                    (update-docs          patient docs elapsed)
           {:keys [patient practitioners new-pills]} (update-practitioners patient practitioners elapsed)
           {:keys [patient spikes]}                  (update-spikes        patient spikes elapsed)
@@ -233,7 +254,8 @@
   (let [save-respawn (:respawn-location @context)]
     (load-level (:current-level @context))
     (swap! context assoc :respawn-location save-respawn)
-    (swap! context update-in [:patient :world-location] save-respawn)))
+    (swap! context update-in [:patient :world-location] save-respawn)
+    (swap! context assoc-in [:patient :docs-remaining] 7)))
 
 (defn revive-patient []
   (swap! context update :patient patient/revive))

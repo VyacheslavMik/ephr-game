@@ -105,21 +105,21 @@ var new_position__$1 = new cljs.core.PersistentArrayMap(null, 2, [new cljs.core.
 var velocity = new cljs.core.Keyword(null,"velocity","velocity",-581524355).cljs$core$IFn$_invoke$arity$1(game_object__$2);
 var velocity__$1 = ((cljs.core._EQ_.call(null,new cljs.core.Keyword(null,"x","x",2099068185).cljs$core$IFn$_invoke$arity$1(move_amount),(0)))?cljs.core.assoc.call(null,velocity,new cljs.core.Keyword(null,"x","x",2099068185),(0)):velocity);
 var velocity__$2 = ((cljs.core._EQ_.call(null,new cljs.core.Keyword(null,"y","y",-1757859776).cljs$core$IFn$_invoke$arity$1(move_amount),(0)))?cljs.core.assoc.call(null,velocity__$1,new cljs.core.Keyword(null,"y","y",-1757859776),(0)):velocity__$1);
-var temp__5457__auto___26045 = new cljs.core.Keyword(null,"draw","draw",1358331674).cljs$core$IFn$_invoke$arity$1(cljs.core.get.call(null,new cljs.core.Keyword(null,"animations","animations",140711296).cljs$core$IFn$_invoke$arity$1(game_object__$2),new cljs.core.Keyword(null,"current-animation","current-animation",90875932).cljs$core$IFn$_invoke$arity$1(game_object__$2)));
-if(cljs.core.truth_(temp__5457__auto___26045)){
-var sprite_26046 = temp__5457__auto___26045;
-var G__26044_26047 = new cljs.core.Keyword(null,"flipped?","flipped?",-1554284978).cljs$core$IFn$_invoke$arity$1(game_object__$2);
-if(cljs.core._EQ_.call(null,true,G__26044_26047)){
-sprite_26046.scale.x = (-1);
+var temp__5457__auto___26062 = new cljs.core.Keyword(null,"draw","draw",1358331674).cljs$core$IFn$_invoke$arity$1(cljs.core.get.call(null,new cljs.core.Keyword(null,"animations","animations",140711296).cljs$core$IFn$_invoke$arity$1(game_object__$2),new cljs.core.Keyword(null,"current-animation","current-animation",90875932).cljs$core$IFn$_invoke$arity$1(game_object__$2)));
+if(cljs.core.truth_(temp__5457__auto___26062)){
+var sprite_26063 = temp__5457__auto___26062;
+var G__26061_26064 = new cljs.core.Keyword(null,"flipped?","flipped?",-1554284978).cljs$core$IFn$_invoke$arity$1(game_object__$2);
+if(cljs.core._EQ_.call(null,true,G__26061_26064)){
+sprite_26063.scale.x = (1);
 } else {
-if(cljs.core._EQ_.call(null,false,G__26044_26047)){
-sprite_26046.scale.x = (1);
+if(cljs.core._EQ_.call(null,false,G__26061_26064)){
+sprite_26063.scale.x = (-1);
 } else {
 
 }
 }
 
-sprite_26046.position.set((new cljs.core.Keyword(null,"x","x",2099068185).cljs$core$IFn$_invoke$arity$1(new_position__$1) + (sprite_26046.width / (2))),new cljs.core.Keyword(null,"y","y",-1757859776).cljs$core$IFn$_invoke$arity$1(new_position__$1));
+sprite_26063.position.set((new cljs.core.Keyword(null,"x","x",2099068185).cljs$core$IFn$_invoke$arity$1(new_position__$1) + (sprite_26063.width / (2))),new cljs.core.Keyword(null,"y","y",-1757859776).cljs$core$IFn$_invoke$arity$1(new_position__$1));
 } else {
 }
 

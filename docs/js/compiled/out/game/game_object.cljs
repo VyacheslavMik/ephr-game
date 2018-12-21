@@ -122,8 +122,8 @@
                      velocity)]
       (when-let [sprite (:draw (get (:animations game-object) (:current-animation game-object)))]
         (case (:flipped? game-object)
-          true  (set! (.. sprite -scale -x) -1)
-          false (set! (.. sprite -scale -x) 1)
+          true  (set! (.. sprite -scale -x) 1)
+          false (set! (.. sprite -scale -x) -1)
           nil)
         (.. sprite -position (set (+ (:x new-position) (/ (.. sprite -width) 2))
                                   (:y new-position))))

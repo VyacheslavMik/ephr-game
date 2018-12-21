@@ -9,12 +9,14 @@
 
 (defonce context (atom {}))
 
-(defonce background (let [sprite (js/PIXI.Sprite.
-                                  (js/PIXI.Texture.fromImage
-                                   "textures/TitleScreen.png"))]
-                      (set! (.. sprite -width) 800)
-                      (set! (.. sprite -height) 600)
-                      sprite))
+(defonce background (let [text (js/PIXI.Text. "Press space bar to play"
+                                                  #js{:fontFamily "Arial"
+                                                      :fontSize 48
+                                                      :fill "white"})]
+                          (.. text -position (set 400 300))
+                          (.. text -anchor (set 0.5))
+                          (set! (.. text -visible) true)
+                          text))
 (defonce root (let [container (js/PIXI.Container.)]
                 (set! (.. container -width) 800)
                 (set! (.. container -height) 600)
@@ -55,17 +57,7 @@
     (case state
       :title-screen
       (do
-        ;; tmp
-        (swap! context update :tmp-time + elapsed)
-        (when (> (:tmp-time @context) 0.5)
-          (start-new-game)
-          (swap! context assoc :state :playing)
-          (set! (.. background -visible) false)
-          (set! (.. camera/container -visible) true)
-          (set! (.. docs-text -visible) true)
-          (set! (.. lives-text -visible) true))
-
-        #_(when (or (controls/key-pressed? :Space) (controls/get-touch-state))
+        (when (or (controls/key-pressed? :Space) (controls/get-touch-state))
           (start-new-game)
           (swap! context assoc :state :playing)
           (set! (.. background -visible) false)
@@ -77,6 +69,11 @@
       (do
         (level-manager/update* elapsed)
         (let [patient (:patient @level-manager/context)]
+          (when (zero? (:docs-remaining patient))
+            (set! (.. game-over-text -text) "Y O U  W I N !")
+            (set! (.. game-over-text -visible) true)
+            (swap! context assoc :state :game-over)
+            (swap! context assoc :death-timer 0))
           (let [s (str "Documents Remaining: " (:docs-remaining patient))]
             (when-not (= s (.. docs-text -text))
               (set! (.. docs-text -text) s)))
@@ -101,6 +98,17 @@
           (swap! context assoc :state :playing)
           (level-manager/revive-patient)
           (level-manager/reload-level)))
+
+      :winning
+      (do
+        (swap! context update :death-timer + elapsed)
+        (when (> (:death-timer @context) 5)
+          (set! (.. game-over-text -visible) false)
+          (set! (.. docs-text -visible) false)
+          (set! (.. lives-text -visible) false)
+          (set! (.. camera/container -visible) false)
+          (set! (.. background -visible) true)
+          (swap! context assoc :state :title-screen)))
 
       :game-over
       (do
@@ -157,7 +165,7 @@
            "textures/Sprites/Nurse/Run.png"
 
            "textures/Sprites/Practitioner/Attack.png"
-           "textures/Sprites/Practitioner/Surrender.png"]
+           "textures/Sprites/Practitioner/Idle.png"]
           #(do
              (tile-map/load-tiles "textures/PlatformTiles.png")
              (tile-map/initialize false))) update* root)

@@ -2,22 +2,32 @@
   (:require [goog.object]
             [game.world :as world]))
 
-(defn load-animation [path width]
+(defn texture
+  ([base-texture i frame-width {:keys [x y width height]} _]
+   (js/PIXI.Texture. base-texture
+                     (js/PIXI.Rectangle. (+ (* i frame-width) x) y width height)
+                     (js/PIXI.Rectangle. (+ (* i frame-width) x) y width height)))
+  ([base-texture i width height]
+   (js/PIXI.Texture. base-texture
+                     (js/PIXI.Rectangle. (* i width) 0 width height)
+                     (js/PIXI.Rectangle. (* i width) 0 width height))))
+
+(defn load-animation [path width opts]
   (let [base-texture (js/PIXI.BaseTexture.fromImage path true js/PIXI.SCALE_MODES.NEAREST)
         height (.. base-texture -height)
         frame-count (Math/floor (/ (.. base-texture -width) width))
         frames (to-array
                 (for [i (range frame-count)]
-                  (js/PIXI.Texture. base-texture
-                                    (js/PIXI.Rectangle. (* i width) 0 width height)
-                                    (js/PIXI.Rectangle. (* i width) 0 width height))))
+                  (if opts
+                    (texture base-texture i width opts nil)
+                    (texture base-texture i width height))))
         animation (js/PIXI.extras.AnimatedSprite. frames)]
     (.. animation -position (set -500 -500))
     (set! (.. animation -anchor -x) 0.5)
     animation))
 
-(defn new-animation-strip [path frame-width name]
-  (let [animation (load-animation path frame-width)]
+(defn new-animation-strip [path frame-width name & [opts]]
+  (let [animation (load-animation path frame-width opts)]
     {:texture path
      :draw animation
      :frame-width frame-width

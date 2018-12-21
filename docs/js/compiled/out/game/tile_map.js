@@ -41,40 +41,40 @@ draw.sprite.interactive.texture = cljs.core.get.call(null,cljs.core.deref.call(n
 
 draw.sprite.foreground.texture = cljs.core.get.call(null,cljs.core.deref.call(null,game.tile_map.tile_textures),new cljs.core.Keyword(null,"foreground","foreground",499022036).cljs$core$IFn$_invoke$arity$1(tile));
 } else {
-var background_26007 = (new PIXI.Sprite(cljs.core.get.call(null,cljs.core.deref.call(null,game.tile_map.tile_textures),new cljs.core.Keyword(null,"background","background",-863952629).cljs$core$IFn$_invoke$arity$1(tile))));
-var interactive_26008 = (new PIXI.Sprite(cljs.core.get.call(null,cljs.core.deref.call(null,game.tile_map.tile_textures),new cljs.core.Keyword(null,"interactive","interactive",-2024078362).cljs$core$IFn$_invoke$arity$1(tile))));
-var foreground_26009 = (new PIXI.Sprite(cljs.core.get.call(null,cljs.core.deref.call(null,game.tile_map.tile_textures),new cljs.core.Keyword(null,"foreground","foreground",499022036).cljs$core$IFn$_invoke$arity$1(tile))));
-background_26007.position.set(x__$1,y__$1);
+var background_26024 = (new PIXI.Sprite(cljs.core.get.call(null,cljs.core.deref.call(null,game.tile_map.tile_textures),new cljs.core.Keyword(null,"background","background",-863952629).cljs$core$IFn$_invoke$arity$1(tile))));
+var interactive_26025 = (new PIXI.Sprite(cljs.core.get.call(null,cljs.core.deref.call(null,game.tile_map.tile_textures),new cljs.core.Keyword(null,"interactive","interactive",-2024078362).cljs$core$IFn$_invoke$arity$1(tile))));
+var foreground_26026 = (new PIXI.Sprite(cljs.core.get.call(null,cljs.core.deref.call(null,game.tile_map.tile_textures),new cljs.core.Keyword(null,"foreground","foreground",499022036).cljs$core$IFn$_invoke$arity$1(tile))));
+background_26024.position.set(x__$1,y__$1);
 
-interactive_26008.position.set(x__$1,y__$1);
+interactive_26025.position.set(x__$1,y__$1);
 
-foreground_26009.position.set(x__$1,y__$1);
+foreground_26026.position.set(x__$1,y__$1);
 
-game.world.add_background_tile.call(null,background_26007);
+game.world.add_background_tile.call(null,background_26024);
 
-game.world.add_interactive_tile.call(null,interactive_26008);
+game.world.add_interactive_tile.call(null,interactive_26025);
 
-game.world.add_foreground_tile.call(null,foreground_26009);
+game.world.add_foreground_tile.call(null,foreground_26026);
 
-draw.sprite = ({"background": background_26007, "interactive": interactive_26008, "foreground": foreground_26009});
+draw.sprite = ({"background": background_26024, "interactive": interactive_26025, "foreground": foreground_26026});
 }
 
 if(cljs.core.truth_(new cljs.core.Keyword(null,"editor-mode?","editor-mode?",-1857893371).cljs$core$IFn$_invoke$arity$1(cljs.core.deref.call(null,game.tile_map.context)))){
 if(cljs.core.truth_(draw.passable)){
 draw.passable.visible = (!(cljs.core.boolean$.call(null,new cljs.core.Keyword(null,"passable?","passable?",1012306625).cljs$core$IFn$_invoke$arity$1(tile))));
 } else {
-var sprite_26010 = (new PIXI.Sprite(cljs.core.get.call(null,cljs.core.deref.call(null,game.tile_map.tile_textures),(1))));
-sprite_26010.tint = (16711680);
+var sprite_26027 = (new PIXI.Sprite(cljs.core.get.call(null,cljs.core.deref.call(null,game.tile_map.tile_textures),(1))));
+sprite_26027.tint = (16711680);
 
-sprite_26010.visible = (!(cljs.core.boolean$.call(null,new cljs.core.Keyword(null,"passable?","passable?",1012306625).cljs$core$IFn$_invoke$arity$1(tile))));
+sprite_26027.visible = (!(cljs.core.boolean$.call(null,new cljs.core.Keyword(null,"passable?","passable?",1012306625).cljs$core$IFn$_invoke$arity$1(tile))));
 
-sprite_26010.alpha = 0.5;
+sprite_26027.alpha = 0.5;
 
-sprite_26010.position.set(x__$1,y__$1);
+sprite_26027.position.set(x__$1,y__$1);
 
-game.world.add_editor.call(null,sprite_26010);
+game.world.add_editor.call(null,sprite_26027);
 
-draw.passable = sprite_26010;
+draw.passable = sprite_26027;
 }
 
 if(clojure.string.blank_QMARK_.call(null,new cljs.core.Keyword(null,"code","code",1586293142).cljs$core$IFn$_invoke$arity$1(tile))){
@@ -88,12 +88,12 @@ draw.text = null;
 if(cljs.core.truth_(draw.text)){
 draw.text.text = new cljs.core.Keyword(null,"code","code",1586293142).cljs$core$IFn$_invoke$arity$1(tile);
 } else {
-var text_26011 = (new PIXI.Text(new cljs.core.Keyword(null,"code","code",1586293142).cljs$core$IFn$_invoke$arity$1(tile),({"fontFamily": "Arial", "fontSize": (10), "fill": "white"})));
-text_26011.position.set(x__$1,y__$1);
+var text_26028 = (new PIXI.Text(new cljs.core.Keyword(null,"code","code",1586293142).cljs$core$IFn$_invoke$arity$1(tile),({"fontFamily": "Arial", "fontSize": (10), "fill": "white"})));
+text_26028.position.set(x__$1,y__$1);
 
-game.world.add_editor.call(null,text_26011);
+game.world.add_editor.call(null,text_26028);
 
-draw.text = text_26011;
+draw.text = text_26028;
 }
 }
 } else {
@@ -109,25 +109,25 @@ var n__4518__auto__ = game.tile_map.map_width;
 var x = (0);
 while(true){
 if((x < n__4518__auto__)){
-var n__4518__auto___26012__$1 = game.tile_map.map_height;
-var y_26013 = (0);
+var n__4518__auto___26029__$1 = game.tile_map.map_height;
+var y_26030 = (0);
 while(true){
-if((y_26013 < n__4518__auto___26012__$1)){
-var tile_26014 = new cljs.core.PersistentArrayMap(null, 6, [new cljs.core.Keyword(null,"background","background",-863952629),game.tile_map.sky_tile,new cljs.core.Keyword(null,"interactive","interactive",-2024078362),(0),new cljs.core.Keyword(null,"foreground","foreground",499022036),(0),new cljs.core.Keyword(null,"code","code",1586293142),null,new cljs.core.Keyword(null,"draw","draw",1358331674),({}),new cljs.core.Keyword(null,"passable?","passable?",1012306625),true], null);
-(map_cells[x][y_26013] = tile_26014);
+if((y_26030 < n__4518__auto___26029__$1)){
+var tile_26031 = new cljs.core.PersistentArrayMap(null, 6, [new cljs.core.Keyword(null,"background","background",-863952629),game.tile_map.sky_tile,new cljs.core.Keyword(null,"interactive","interactive",-2024078362),(0),new cljs.core.Keyword(null,"foreground","foreground",499022036),(0),new cljs.core.Keyword(null,"code","code",1586293142),null,new cljs.core.Keyword(null,"draw","draw",1358331674),({}),new cljs.core.Keyword(null,"passable?","passable?",1012306625),true], null);
+(map_cells[x][y_26030] = tile_26031);
 
-game.tile_map.update_tile.call(null,x,y_26013,tile_26014);
+game.tile_map.update_tile.call(null,x,y_26030,tile_26031);
 
-var G__26015 = (y_26013 + (1));
-y_26013 = G__26015;
+var G__26032 = (y_26030 + (1));
+y_26030 = G__26032;
 continue;
 } else {
 }
 break;
 }
 
-var G__26016 = (x + (1));
-x = G__26016;
+var G__26033 = (x + (1));
+x = G__26033;
 continue;
 } else {
 return null;
@@ -159,8 +159,8 @@ game.tile_map.get_cell_by_pixel = (function game$tile_map$get_cell_by_pixel(pixe
 return new cljs.core.PersistentArrayMap(null, 2, [new cljs.core.Keyword(null,"x","x",2099068185),game.tile_map.get_cell_by_pixel_x.call(null,new cljs.core.Keyword(null,"x","x",2099068185).cljs$core$IFn$_invoke$arity$1(pixel_location)),new cljs.core.Keyword(null,"y","y",-1757859776),game.tile_map.get_cell_by_pixel_y.call(null,new cljs.core.Keyword(null,"y","y",-1757859776).cljs$core$IFn$_invoke$arity$1(pixel_location))], null);
 });
 game.tile_map.get_cell_center = (function game$tile_map$get_cell_center(var_args){
-var G__26018 = arguments.length;
-switch (G__26018) {
+var G__26035 = arguments.length;
+switch (G__26035) {
 case 1:
 return game.tile_map.get_cell_center.cljs$core$IFn$_invoke$arity$1((arguments[(0)]));
 
@@ -186,8 +186,8 @@ return new cljs.core.PersistentArrayMap(null, 2, [new cljs.core.Keyword(null,"x"
 game.tile_map.get_cell_center.cljs$lang$maxFixedArity = 2;
 
 game.tile_map.cell_world_rectangle = (function game$tile_map$cell_world_rectangle(var_args){
-var G__26021 = arguments.length;
-switch (G__26021) {
+var G__26038 = arguments.length;
+switch (G__26038) {
 case 1:
 return game.tile_map.cell_world_rectangle.cljs$core$IFn$_invoke$arity$1((arguments[(0)]));
 
@@ -213,8 +213,8 @@ return new cljs.core.PersistentArrayMap(null, 4, [new cljs.core.Keyword(null,"x"
 game.tile_map.cell_world_rectangle.cljs$lang$maxFixedArity = 2;
 
 game.tile_map.cell_screen_rectangle = (function game$tile_map$cell_screen_rectangle(var_args){
-var G__26024 = arguments.length;
-switch (G__26024) {
+var G__26041 = arguments.length;
+switch (G__26041) {
 case 1:
 return game.tile_map.cell_screen_rectangle.cljs$core$IFn$_invoke$arity$1((arguments[(0)]));
 
@@ -257,8 +257,8 @@ return null;
 }
 });
 game.tile_map.cell_passable_QMARK_ = (function game$tile_map$cell_passable_QMARK_(var_args){
-var G__26027 = arguments.length;
-switch (G__26027) {
+var G__26044 = arguments.length;
+switch (G__26044) {
 case 1:
 return game.tile_map.cell_passable_QMARK_.cljs$core$IFn$_invoke$arity$1((arguments[(0)]));
 
@@ -293,8 +293,8 @@ game.tile_map.cell_passable_by_pixel_QMARK_ = (function game$tile_map$cell_passa
 return game.tile_map.cell_passable_QMARK_.call(null,game.tile_map.get_cell_by_pixel_x.call(null,new cljs.core.Keyword(null,"x","x",2099068185).cljs$core$IFn$_invoke$arity$1(pixel_location)),game.tile_map.get_cell_by_pixel_y.call(null,new cljs.core.Keyword(null,"y","y",-1757859776).cljs$core$IFn$_invoke$arity$1(pixel_location)));
 });
 game.tile_map.cell_code_value = (function game$tile_map$cell_code_value(var_args){
-var G__26030 = arguments.length;
-switch (G__26030) {
+var G__26047 = arguments.length;
+switch (G__26047) {
 case 1:
 return game.tile_map.cell_code_value.cljs$core$IFn$_invoke$arity$1((arguments[(0)]));
 
@@ -326,8 +326,8 @@ return null;
 game.tile_map.cell_code_value.cljs$lang$maxFixedArity = 2;
 
 game.tile_map.get_map_square_at_pixel = (function game$tile_map$get_map_square_at_pixel(var_args){
-var G__26033 = arguments.length;
-switch (G__26033) {
+var G__26050 = arguments.length;
+switch (G__26050) {
 case 1:
 return game.tile_map.get_map_square_at_pixel.cljs$core$IFn$_invoke$arity$1((arguments[(0)]));
 
@@ -365,27 +365,27 @@ return cljs.core.to_array.call(null,cljs.core.map.call(null,(function (tile){
 return cljs.core.assoc.call(null,tile,new cljs.core.Keyword(null,"draw","draw",1358331674),({}));
 }),ys));
 }),cljs.reader.read_string.call(null,cells)));
-var n__4518__auto___26035 = game.tile_map.map_width;
-var x_26036 = (0);
+var n__4518__auto___26052 = game.tile_map.map_width;
+var x_26053 = (0);
 while(true){
-if((x_26036 < n__4518__auto___26035)){
-var n__4518__auto___26037__$1 = game.tile_map.map_height;
-var y_26038 = (0);
+if((x_26053 < n__4518__auto___26052)){
+var n__4518__auto___26054__$1 = game.tile_map.map_height;
+var y_26055 = (0);
 while(true){
-if((y_26038 < n__4518__auto___26037__$1)){
-var tile_26039 = (arr[x_26036][y_26038]);
-game.tile_map.update_tile.call(null,x_26036,y_26038,tile_26039);
+if((y_26055 < n__4518__auto___26054__$1)){
+var tile_26056 = (arr[x_26053][y_26055]);
+game.tile_map.update_tile.call(null,x_26053,y_26055,tile_26056);
 
-var G__26040 = (y_26038 + (1));
-y_26038 = G__26040;
+var G__26057 = (y_26055 + (1));
+y_26055 = G__26057;
 continue;
 } else {
 }
 break;
 }
 
-var G__26041 = (x_26036 + (1));
-x_26036 = G__26041;
+var G__26058 = (x_26053 + (1));
+x_26053 = G__26058;
 continue;
 } else {
 }

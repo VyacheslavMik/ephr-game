@@ -9,7 +9,7 @@
 
 (defn new-pill [world-location velocity]
   (let [ob (game-object/new-game-object)
-        animations {"default" (-> (anim/new-animation-strip (load-texture) 48 "default")
+        animations {"default" (-> (anim/new-animation-strip (load-texture) 47 "default")
                                   (assoc :loop-animation? true)
                                   (anim/update-animation-strip))}]
     (-> ob
@@ -18,10 +18,10 @@
                :velocity (-> velocity
                              (u/vector-normalize)
                              (u/vector-mul 200))
-               :facing-left (< (:x velocity) 0)
-               :frame-width 48
-               :frame-height 4
-               :collision-rectangle {:x 0 :y 0 :width 48 :height 4}
+               :facing-left true
+               :frame-width 47
+               :frame-height 24
+               :collision-rectangle {:x 0 :y 0 :width 47 :height 24}
                :short? true
                :code-based-blocks? false
                :enabled? true)
